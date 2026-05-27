@@ -1,0 +1,643 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════════════════════════════════
+   Tokens — pulled 1:1 from FinanceOS_Landing_v2.html
+   Tailwind reads the same values from tailwind.config.ts.
+   ════════════════════════════════════════════════════════════════════ */
+:root,
+:root.dark {
+  color-scheme: dark;
+  --bg-base: #050505;
+  --bg-elev: #0a0a0a;
+  --surface-1: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.025);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --fg-strong: #ffffff;
+  --fg: #e4e4e7;
+  --fg-muted: #71717a;
+  --fg-faint: #52525b;
+  --gold: #d4af37;
+  --gold-soft: #fcd34d;
+  --gold-deep: #92691c;
+  --success: #10b981;
+  --danger: #f43f5e;
+  --warning: #f59e0b;
+  --glass-bg: rgba(255, 255, 255, 0.025);
+  --glass-blur: blur(22px) saturate(160%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html,
+body {
+  background: #08090c;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 175, 55, 0.06), transparent 60%),
+    linear-gradient(0deg, #050505, #050505);
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.4);
+  color: var(--fg-strong);
+}
+
+/* Subtle gold scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.18);
+  border-radius: 999px;
+  border: 2px solid #050505;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.35); }
+
+/* ════════════════════════════════════════════════════════════════════
+   Utility classes (the ones Tailwind can't express cleanly)
+   ════════════════════════════════════════════════════════════════════ */
+
+.container-prose {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 32px;
+}
+@media (max-width: 980px) {
+  .container-prose { padding-inline: 22px; }
+}
+@media (max-width: 640px) {
+  .container-prose { padding-inline: 18px; }
+}
+
+/* Gold gradient on text */
+.gold-text {
+  background: linear-gradient(180deg, #fde68a 0%, #d4af37 60%, #92691c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Glass card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card), var(--inset-highlight);
+  border-radius: 18px;
+}
+
+/* Buttons — gold + ghost gold */
+.btn-gold {
+  background: linear-gradient(180deg, #fcd34d 0%, #d4af37 100%);
+  color: #1a1202;
+  border: 1px solid rgba(252, 211, 77, 0.55);
+  box-shadow:
+    0 6px 20px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  transition: all 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.btn-gold:hover:not([disabled]) {
+  box-shadow:
+    0 12px 32px rgba(212, 175, 55, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+}
+.btn-gold[disabled] { cursor: default; }
+
+.btn-ghost-gold {
+  background: rgba(212, 175, 55, 0.04);
+  color: var(--gold-soft);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.btn-ghost-gold:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Shimmer sweep on primary CTA */
+.btn-shimmer { position: relative; isolation: isolate; }
+.btn-shimmer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: btnShimmer 2.6s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+@keyframes btnShimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.press { transition: transform 140ms ease; }
+.press:active { transform: scale(0.97); }
+
+/* Overline */
+.overline {
+  display: inline-block;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   JAR animations (used by LandingJar)
+   ════════════════════════════════════════════════════════════════════ */
+@keyframes ljWave {
+  0%   { transform: translateX(-50%); }
+  50%  { transform: translateX(-42%); }
+  100% { transform: translateX(-50%); }
+}
+.lj-wave { animation: ljWave 6s ease-in-out infinite; }
+
+@keyframes ljCoinFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-3px) rotate(4deg); }
+}
+.lj-coin {
+  animation: ljCoinFloat 3.4s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes ljSpark {
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  50%      { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes ljDrop {
+  0%   { transform: translateY(-30px); opacity: 0; }
+  12%  { opacity: 1; }
+  78%  { opacity: 1; }
+  100% { transform: translateY(110px); opacity: 0; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO v2 — framing watermark jars
+   ════════════════════════════════════════════════════════════════════ */
+.herov2-jar {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, translate;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.16;
+  filter: blur(1.5px) saturate(110%);
+}
+.herov2-jar--left {
+  left: 0;
+  translate: -40% -50%;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 35%, transparent 100%);
+          mask-image: linear-gradient(90deg, #000 0%, #000 35%, transparent 100%);
+}
+.herov2-jar--right {
+  right: 0;
+  translate: 40% -50%;
+  -webkit-mask-image: linear-gradient(270deg, #000 0%, #000 35%, transparent 100%);
+          mask-image: linear-gradient(270deg, #000 0%, #000 35%, transparent 100%);
+}
+@keyframes heroV2FloatL {
+  0%, 100% { translate: -40% -50%; }
+  50%      { translate: -40% calc(-50% - 12px); }
+}
+@keyframes heroV2FloatR {
+  0%, 100% { translate: 40% -50%; }
+  50%      { translate: 40% calc(-50% + 12px); }
+}
+.lj-float-left  { animation: heroV2FloatL 9s ease-in-out infinite; }
+.lj-float-right { animation: heroV2FloatR 9s ease-in-out infinite -4.5s; }
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO v2 — flowing purple→blue stat pills (purple is HERE only)
+   ════════════════════════════════════════════════════════════════════ */
+@property --pill-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-pill {
+  position: absolute;
+  z-index: 3;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.78);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+          backdrop-filter: blur(14px) saturate(140%);
+  color: var(--fg-strong);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  isolation: isolate;
+  cursor: default;
+  /* Center the pill on its (left, top) coordinate so it sits ON the line node */
+  transform: translate(-50%, -50%);
+  box-shadow:
+    inset 0 0 0 1px rgba(139, 92, 246, 0.35),
+    0 0 22px rgba(124, 58, 237, 0.28),
+    0 0 50px rgba(59, 130, 246, 0.12);
+  transition: box-shadow 320ms ease, transform 320ms ease;
+}
+
+/* Outer purple bloom — ambient halo around the pill */
+.glow-pill::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.22), transparent 65%);
+  filter: blur(8px);
+  z-index: -2;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+/* Flowing rotating border — conic-gradient masked into a 1.5px ring */
+.glow-pill::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--pill-angle),
+    rgba(124, 58, 237, 0.0) 0deg,
+    rgba(124, 58, 237, 0.55) 40deg,
+    rgba(139, 92, 246, 0.85) 70deg,
+    rgba(255, 255, 255, 0.95) 90deg,
+    rgba(139, 92, 246, 0.85) 110deg,
+    rgba(59, 130, 246, 0.55) 140deg,
+    rgba(59, 130, 246, 0.0) 200deg,
+    rgba(124, 58, 237, 0.0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+  animation: pillSpin 4s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes pillSpin {
+  to { --pill-angle: 360deg; }
+}
+
+/* Hover / activated state */
+.glow-pill[data-active='true'] {
+  transform: translate(-50%, calc(-50% - 1px));
+  box-shadow:
+    inset 0 0 0 1px rgba(167, 139, 250, 0.6),
+    0 0 30px rgba(124, 58, 237, 0.55),
+    0 0 70px rgba(59, 130, 246, 0.3);
+}
+.glow-pill[data-active='true']::after { opacity: 1.4; }
+
+.glow-pill__icon {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: linear-gradient(180deg, rgba(252, 211, 77, 0.18), rgba(146, 105, 28, 0.08));
+  border: 1px solid rgba(252, 211, 77, 0.25);
+  display: grid; place-items: center;
+  font-size: 15px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO v2 — connector line + travelling pulse
+   ════════════════════════════════════════════════════════════════════ */
+.chain-seg {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  fill: none;
+  transition: stroke 280ms ease, stroke-width 280ms ease;
+}
+.chain-seg--active {
+  stroke: rgba(255, 255, 255, 0.65);
+  stroke-width: 1.4;
+}
+
+.chain-pulse {
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 10 380;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  fill: none;
+  filter: drop-shadow(0 0 4px white) drop-shadow(0 0 10px rgba(139, 92, 246, 0.7));
+  transition: opacity 220ms ease;
+}
+.chain-pulse--active {
+  opacity: 1;
+  animation: chainFlow 1.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes chainFlow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -390; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   NAV — floating glass pill
+   ════════════════════════════════════════════════════════════════════ */
+.nav-pill {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 1100px;
+  z-index: 50;
+
+  background: rgba(10, 10, 10, 0.55);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+          backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: background 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+}
+.nav-pill--scrolled {
+  background: rgba(10, 10, 10, 0.78);
+  border-color: rgba(212, 175, 55, 0.22);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(212, 175, 55, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SOLUTION — 2-col grid that stacks on mobile, jar above copy
+   ════════════════════════════════════════════════════════════════════ */
+.solution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 980px) {
+  .solution-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    text-align: left;
+  }
+  /* On mobile, the jar visually leads — order:-1 lifts it above the copy. */
+  .solution-jar { order: -1; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FINAL CTA — email-capture form + one-shot gold confetti on success
+   ════════════════════════════════════════════════════════════════════ */
+@keyframes ctaConfetti {
+  0%   { transform: translateY(0)      rotate(0deg);   opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translateY(-360px) rotate(720deg); opacity: 0; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HOWITWORKS — 3 numbered steps + scroll-drawn gold connector line
+   ════════════════════════════════════════════════════════════════════ */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  position: relative;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PRIVACY — shield left, copy + checklist right; stacks on mobile
+   ════════════════════════════════════════════════════════════════════ */
+.privacy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CALCULATOR — twin-slider card with a live jar on the right
+   ════════════════════════════════════════════════════════════════════ */
+.calc-card {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+}
+
+/* Native range input — transparent overlay above the gold fill bar.
+   The thumb is the only visible bit of the input. */
+.calc-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: grab;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+}
+.calc-range:active { cursor: grabbing; }
+
+.calc-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fde68a, #b45309);
+  box-shadow:
+    0 0 0 4px rgba(252, 211, 77, 0.18),
+    0 6px 18px rgba(212, 175, 55, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  cursor: grab;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.calc-range::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+.calc-range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+.calc-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fde68a, #b45309);
+  box-shadow:
+    0 0 0 4px rgba(252, 211, 77, 0.18),
+    0 6px 18px rgba(212, 175, 55, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  cursor: grab;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FEATURESGRID — 6-card grid, hover lift, envelope-bar + halo pulses
+   ════════════════════════════════════════════════════════════════════ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.feat-card {
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms ease,
+    border-color 320ms ease;
+}
+.feat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(252, 211, 77, 0.3);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.5),
+    0 0 32px rgba(212, 175, 55, 0.1);
+}
+
+/* Smart-budgets bars — continuous breathe (scaleX + brightness) */
+@keyframes feat-bar-loop {
+  0%   { transform: scaleX(0.25); filter: brightness(0.85); }
+  55%  { transform: scaleX(1);    filter: brightness(1.15); }
+  70%  { transform: scaleX(1);    filter: brightness(1.15); }
+  100% { transform: scaleX(0.25); filter: brightness(0.85); }
+}
+.feat-bar-loop {
+  transform-origin: left center;
+  animation: feat-bar-loop 4.8s cubic-bezier(0.22, 1, 0.36, 1) infinite both;
+}
+
+/* Auto-fill-jar card — slow halo pulse behind the jar */
+@keyframes jar-pulse-halo {
+  0%, 100% { opacity: 0.6; transform: scale(0.96); }
+  50%      { opacity: 1;   transform: scale(1.06); }
+}
+.jar-pulse-halo {
+  animation: jar-pulse-halo 2.8s ease-in-out infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PHONESHOWCASE — phone frames lift on hover, stage shrinks on mobile
+   ════════════════════════════════════════════════════════════════════ */
+.phone-frame {
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.phone-frame:hover {
+  /* `!important` overrides the inline parallax transform — matches source.
+     Phones "stand up" on hover, losing their tilt; that's intentional. */
+  transform: translateY(-12px) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Responsive — mobile first
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width: 980px) {
+  /* Mobile hero — show only the left jar centered, hide pills + line */
+  .herov2-jar--right { display: none !important; }
+  .herov2-jar--left {
+    left: 50%;
+    top: 18%;
+    translate: -50% 0 !important;
+    animation: none !important;
+    transform: scale(0.62) !important;
+    -webkit-mask-image: radial-gradient(circle, #000 60%, transparent 100%) !important;
+            mask-image: radial-gradient(circle, #000 60%, transparent 100%) !important;
+  }
+  .glow-pill,
+  .chain-svg { display: none !important; }
+
+  /* PhoneShowcase — shrink the 3-phone stage. Section's overflow:hidden
+     clips the side phones cleanly on narrower viewports. */
+  .phones-stage {
+    transform: scale(0.82);
+    transform-origin: top center;
+  }
+
+  /* FeaturesGrid — 3 cols → 2 cols on tablet */
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Calculator — controls + jar collapse onto one column.
+     Card padding shrinks so it fits comfortably on narrow viewports. */
+  .calc-card {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding: 24px !important;
+  }
+
+  /* Privacy — shield + copy stack into one column. */
+  .privacy-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  /* HowItWorks — collapse to one column on mobile; the connector
+     line is decorative and would crash visually through stacked
+     cards, so hide it entirely. */
+  .how-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .how-line {
+    display: none !important;
+  }
+
+  /* FinalCTA — input + button stack vertically below the fold so
+     the touch targets stay generous on phone widths. */
+  .cta-form {
+    flex-direction: column !important;
+  }
+}
+@media (max-width: 640px) {
+  .phones-stage {
+    transform: scale(0.66);
+    transform-origin: top center;
+  }
+
+  /* FeaturesGrid — 2 cols → 1 col on phone */
+  .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .lj-float-left,
+  .lj-float-right,
+  .btn-shimmer::before { animation: none !important; }
+}

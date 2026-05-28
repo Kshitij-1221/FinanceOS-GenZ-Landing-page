@@ -1,8 +1,5 @@
 # FinanceOS — Landing Page
 
-Standalone Next.js landing page. Lives in this folder only — no shared code
-with the React Native app in `../financeos/`.
-
 ## Run locally
 
 ```bash
@@ -71,16 +68,6 @@ The `FinalCTA` form POSTs the email to **Formspree**:
 Until you set the env var, the form will fall back to a local "preview"
 success state (no network call) so you can still demo the page.
 
-## App screenshots (PhoneShowcase)
-
-The PhoneShowcase section expects PNGs at:
-
-- `public/img/screen-promise.png`
-- `public/img/screen-dashboard2.png`
-- `public/img/screen-welcome.png`
-
-Drop them in `public/img/` (names match the design source). The component
-falls back to a styled placeholder if the file is missing.
 
 ## Vercel-ready
 

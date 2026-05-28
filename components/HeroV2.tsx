@@ -7,26 +7,18 @@
  *   1. Soft gold radial washes (top, sides) baked into the background
  *   2. Two large "watermark" jars cropped by the left/right edges,
  *      drifting with the mouse and slowly breathing their fill levels
- *   3. ONE white SVG path that connects two pills — line enters
- *      from off-screen left, threads through the left pill (used as
- *      a node), arcs ABOVE the headline area, threads through the
- *      right pill, exits off-screen right
- *   4. The two pills themselves — purple→blue flowing conic-gradient
- *      borders (CSS @property + animation, no JS); hovering either
- *      pill sends a glowing pulse along the line to its neighbour
- *   5. Centered content channel: overline + huge gold-accent headline
+ *   3. Centred content channel: overline + huge gold-accent headline
  *      + sub + 2 CTAs + 3 trust dots
  *
- * Differences from the prototype (landing-v2/hero-and-trust.jsx):
- *   - 2 pills instead of 4 (per the brief)
- *   - The line passes THROUGH both pills (single connected system),
- *     not a 3-segment chain between separate pills
- *   - Path is routed to clear the centered headline at all viewport sizes
- *
- * Purple/blue lives ONLY in this file — every other section uses gold.
+ * History
+ *   v1 had two purple→blue stat pills connected by an SVG chain, plus a
+ *   hover-pulse interaction. Those were removed in the "pure gold/black"
+ *   pass — the hero now reads as a single calm composition framed by the
+ *   ghosted jars. All pill/chain CSS was deleted from globals.css to
+ *   match.
  *
  * Mobile (< 980px): the right watermark jar hides, the left jar centres
- * and shrinks to a single hero illustration, the pills + line hide.
+ * and shrinks to a single hero illustration.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -34,30 +26,9 @@ import { LandingJar } from './LandingJar';
 import { Overline } from './Overline';
 import { Reveal } from './Reveal';
 
-// ── Path geometry ────────────────────────────────────────────────────
-// Single SVG path; viewBox is 1100 × 720 with preserveAspectRatio="none"
-// so the pill (left, top %) values map directly onto these coordinates.
-const LEFT_NODE  = { x: 200, y: 160 } as const;
-const RIGHT_NODE = { x: 900, y: 220 } as const;
-// `LINE_PATH`:
-//   - enters far-left at y=160, goes straight to left node
-//   - curves UP (control points at y=60) — peak well above the headline
-//     centre which sits around y=400+
-//   - reaches the right node
-//   - exits far-right at y=220
-const LINE_PATH =
-  `M -50 ${LEFT_NODE.y} L ${LEFT_NODE.x} ${LEFT_NODE.y} ` +
-  `C 380 60, 720 60, ${RIGHT_NODE.x} ${RIGHT_NODE.y} ` +
-  `L 1150 ${RIGHT_NODE.y}`;
-
-// Pixel anchors as percentages so HTML pills align with the SVG path.
-const leftPillPos  = { left: `${(LEFT_NODE.x  / 1100) * 100}%`, top: `${(LEFT_NODE.y  / 720) * 100}%` };
-const rightPillPos = { left: `${(RIGHT_NODE.x / 1100) * 100}%`, top: `${(RIGHT_NODE.y / 720) * 100}%` };
-
 export function HeroV2() {
   const stageRef = useRef<HTMLElement | null>(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState<0 | 1 | null>(null);
 
   // Slow ambient fill on the watermark jars
   const [leftPct,  setLeftPct]  = useState(58);
@@ -115,7 +86,7 @@ export function HeroV2() {
       style={{
         paddingTop: 100,
         paddingBottom: 60,
-        minHeight: 760,
+        minHeight: 720,
         overflow: 'clip',
       }}
     >
@@ -172,69 +143,7 @@ export function HeroV2() {
         />
       </div>
 
-      {/* Connector line (single path through both pill nodes).
-          preserveAspectRatio="none" so the viewBox stretches to fill
-          the hero — the pill (left, top %) match the path's anchors. */}
-      <svg
-        className="chain-svg pointer-events-none absolute inset-0 z-[2] h-full w-full"
-        viewBox="0 0 1100 720"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {/* Resting line — brightens when any pill is hovered */}
-        <path
-          d={LINE_PATH}
-          className={`chain-seg ${hovered !== null ? 'chain-seg--active' : ''}`}
-        />
-        {/* Travelling pulse — only visible when active */}
-        <path
-          d={LINE_PATH}
-          className={`chain-pulse ${hovered !== null ? 'chain-pulse--active' : ''}`}
-        />
-      </svg>
-
-      {/* LEFT PILL — "+₹420 · Food · Just logged" — sits on left node */}
-      <div
-        className="glow-pill"
-        style={leftPillPos}
-        data-active={hovered !== null ? 'true' : 'false'}
-        onMouseEnter={() => setHovered(0)}
-        onMouseLeave={() => setHovered(null)}
-      >
-        <div className="glow-pill__icon">🍔</div>
-        <div className="flex flex-col leading-tight">
-          <span className="font-mono text-[13.5px] font-extrabold text-gold-soft">
-            +₹420
-          </span>
-          <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-fg-muted">
-            Food · Just logged
-          </span>
-        </div>
-      </div>
-
-      {/* RIGHT PILL — "Jar 72% full" — sits on right node */}
-      <div
-        className="glow-pill"
-        style={{ ...rightPillPos, padding: '9px 14px' }}
-        data-active={hovered !== null ? 'true' : 'false'}
-        onMouseEnter={() => setHovered(1)}
-        onMouseLeave={() => setHovered(null)}
-      >
-        <span
-          className="inline-block rounded-full"
-          style={{
-            width: 8,
-            height: 8,
-            background: '#fcd34d',
-            boxShadow: '0 0 8px rgba(252,211,77,0.9)',
-          }}
-        />
-        <span className="font-mono text-[12.5px] font-bold text-gold-soft tracking-[-0.01em]">
-          Jar 72% full
-        </span>
-      </div>
-
-      {/* Centre content channel */}
+      {/* Centre content channel — the whole hero now */}
       <div className="container-prose relative z-[4] text-center">
         <Reveal delay={0}>
           <Overline>Your money, on autopilot</Overline>
@@ -327,7 +236,7 @@ export function HeroV2() {
               <span
                 aria-hidden
                 className="inline-block h-1.5 w-1.5 rounded-full"
-                style={{ background: '#a78bfa' }}
+                style={{ background: 'var(--gold-soft)' }}
               />
               Free forever
             </span>

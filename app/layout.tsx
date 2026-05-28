@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import { outfit, unbounded, jetbrainsMono } from './fonts';
+import { SmoothScroll } from '@/components/SmoothScroll';
+// Lenis utility classes (.lenis-smooth, .lenis-stopped, etc.) — applied
+// to <html> by Lenis at runtime. Import before globals.css so Tailwind
+// + our own rules can override anything specific.
+import 'lenis/dist/lenis.css';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -25,7 +30,7 @@ export default function RootLayout({
       className={`dark ${outfit.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-bg-base font-body text-fg antialiased">
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

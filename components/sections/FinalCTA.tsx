@@ -1,30 +1,6 @@
 'use client';
 
-/**
- * FinalCTA — email capture → Formspree → gold confetti.
- *
- * Ported from landing-v2/sections-bottom.jsx > FinalCTA, with three
- * production additions on top of the prototype:
- *   1. Real POST to NEXT_PUBLIC_FORMSPREE_ENDPOINT (JSON; Accept: JSON)
- *   2. Loading + error states (the prototype only had idle/submitted)
- *   3. Graceful fallback: if the env var isn't set, we short-circuit
- *      to a local "preview success" so the page still demos cleanly
- *      without an endpoint configured
- *
- * Confetti
- *   - 36 pseudo-random pieces (3 shapes: disc, diamond, streamer)
- *   - Generated once on success, mounted for 3.6s then torn down
- *   - Animated via `@keyframes ctaConfetti` in globals.css
- *   - Spread horizontally around the form centre via marginLeft
- *
- * Reduced motion
- *   - The global `prefers-reduced-motion` guard in globals.css collapses
- *     the confetti keyframe to 0.001ms — pieces don't visually animate
- *     but they still mount briefly so screen readers / aria-live
- *     observers see the same DOM change
- *
- * Section is the last on the page (Footer renders after).
- */
+/** Email capture through the server-side Supabase waitlist endpoint. */
 
 import { useState } from 'react';
 import { Overline } from '../Overline';
@@ -65,11 +41,12 @@ function generateConfetti(): ConfettiPiece[] {
 
 export function FinalCTA() {
   const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
   const submitted = status === 'success';
   const submitting = status === 'submitting';
 
@@ -83,50 +60,22 @@ export function FinalCTA() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmed = email.trim();
-    if (!trimmed || submitted || submitting) return;
-
-    setStatus('submitting');
-    setErrorMsg(null);
-
-    // Fallback path — no endpoint configured. Lets the page demo without
-    // Formspree set up. Includes a tiny artificial latency so the UI
-    // transitions don't feel jarring.
-    if (
-      !endpoint ||
-      endpoint.includes('your-form-id') ||
-      !endpoint.startsWith('https://')
-    ) {
-      window.setTimeout(fireSuccess, 240);
-      return;
-    }
-
+    if (submitted || submitting) return;
+    if (!email.trim() || !consent) { setErrorMsg('Enter your email and agree to receive the early-access email.'); return; }
+    setStatus('submitting'); setErrorMsg(null);
     try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ email: trimmed }),
+      const response = await fetch('/api/waitlist', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), consent, website }),
+        signal: AbortSignal.timeout(15000),
       });
-      if (!res.ok) {
-        // Formspree returns 422 for validation errors with a JSON body
-        let detail = `Couldn't submit (HTTP ${res.status}).`;
-        try {
-          const data = (await res.json()) as { error?: string; errors?: Array<{ message?: string }> };
-          detail = data.error || data.errors?.[0]?.message || detail;
-        } catch {
-          /* body not JSON — keep the generic detail */
-        }
-        setStatus('error');
-        setErrorMsg(detail);
-        return;
+      const data = await response.json();
+      if (!response.ok || data.ok !== true) {
+        setStatus('error'); setErrorMsg(data.error || 'We could not confirm your signup. Please try again.'); return;
       }
       fireSuccess();
     } catch {
-      setStatus('error');
-      setErrorMsg('Network hiccup — try again in a moment?');
+      setStatus('error'); setErrorMsg('We could not confirm your signup. Please try again.');
     }
   };
 
@@ -187,10 +136,9 @@ export function FinalCTA() {
 
         <Reveal delay={280}>
           <form
-            onSubmit={onSubmit}
-            className="cta-form relative mx-auto mt-10 flex justify-center gap-2.5"
+            id="waitlist-form" onSubmit={onSubmit}
+            className="cta-form relative mx-auto mt-10 flex flex-col justify-center gap-2.5"
             style={{ maxWidth: 520 }}
-            noValidate
             aria-busy={submitting}
           >
             <div
@@ -215,7 +163,9 @@ export function FinalCTA() {
                 placeholder="you@gmail.com"
                 disabled={submitted || submitting}
                 aria-label="Email address"
-                className="flex-1 font-body"
+                maxLength={254}
+                autoComplete="email"
+                className="min-w-0 flex-1 font-body"
                 style={{
                   padding: '16px 0',
                   fontSize: 15,
@@ -251,6 +201,14 @@ export function FinalCTA() {
                   </span>
                 )}
               </button>
+            </div>
+
+            <label className="flex items-start gap-2 text-left text-sm text-fg-muted">
+              <input type="checkbox" required checked={consent} onChange={e => setConsent(e.target.checked)} disabled={submitted || submitting} className="mt-1" />
+              <span>Email me when Blyth early access opens. I have read the <a className="text-gold-soft underline" href="/privacy">privacy notice</a>.</span>
+            </label>
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px' }}>
+              <label>Website<input name="website" value={website} onChange={e => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" /></label>
             </div>
 
             {/* Confetti — absolutely positioned just below the form, shooting up */}
@@ -330,7 +288,7 @@ export function FinalCTA() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--success)' }}
               />
-              4,200+ already on the list
+              Be part of the first group
             </span>
             <span className="opacity-40">·</span>
             <span>Made for India · Built for focus</span>

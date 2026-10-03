@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { outfit, unbounded, jetbrainsMono } from './fonts';
 import { SmoothScroll } from '@/components/SmoothScroll';
 // Lenis utility classes (.lenis-smooth, .lenis-stopped, etc.) — applied
@@ -7,14 +7,15 @@ import { SmoothScroll } from '@/components/SmoothScroll';
 import 'lenis/dist/lenis.css';
 import './globals.css';
 
+export const viewport: Viewport = { themeColor: '#050505' };
+
 export const metadata: Metadata = {
-  title: 'FinanceOS — Watch your savings fill up',
+  title: 'Blyth — Watch your savings fill up',
   description:
-    'The calm finance app for India. Set a goal, watch your jar fill, and finally feel in control of your money. 100% on-device. No bank login.',
-  themeColor: '#050505',
+    'The calm finance app for India. Set a goal, watch your jar fill, and finally feel in control of your money. Local-first tracking. No bank login.',
   openGraph: {
-    title: 'FinanceOS — Watch your savings fill up',
-    description: 'The calm finance app for India. 100% on-device. No bank login.',
+    title: 'Blyth — Watch your savings fill up',
+    description: 'The calm finance app for India. Local-first tracking. No bank login.',
     type: 'website',
   },
 };

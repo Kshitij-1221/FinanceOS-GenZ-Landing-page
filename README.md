@@ -1,89 +1,38 @@
-# FinanceOS — Landing Page
+# Blyth landing page
+
+Next.js 14, React, TypeScript and Tailwind landing page for Blyth. The email form stores consented early-access signups in Supabase through a server-side API. A waitlist signup does not create an app account.
 
 ## Run locally
 
-```bash
-cd Landing-Page-v1
+```sh
 npm install
+# For a new checkout only; do not overwrite an existing configured file.
+cp .env.example .env.local
 npm run dev
 ```
 
-Then open <http://localhost:3000>.
+Open http://localhost:3000. Complete the database setup in [SUPABASE-WAITLIST.md](SUPABASE-WAITLIST.md) before testing signups. Missing configuration produces an error, never a pretend success.
 
-## Tech
+## Configuration
 
-- **Next.js 14** (App Router) + **TypeScript**
-- **Tailwind CSS** with design tokens centralized in `tailwind.config.ts`
-- **Framer Motion** for scroll reveals (sections beyond the hero will use it)
-- **`next/font`** for Outfit (body) / Unbounded (display) / JetBrains Mono (numbers)
-- No state library, no database, no API routes
-- One form: the FinalCTA email capture posts to Formspree (no backend)
+Keep `SUPABASE_URL`, `SUPABASE_SECRET_KEY` and `WAITLIST_HASH_SECRET` on the server. Never prefix the secret key with `NEXT_PUBLIC_`. `NEXT_PUBLIC_SUPPORT_EMAIL` is the public address shown on the privacy and contact pages. Local environment files are ignored by Git.
 
-## Project structure
+## Validation
 
-```
-Landing-Page-v1/
-├── app/
-│   ├── layout.tsx          # root layout — fonts + metadata
-│   ├── page.tsx            # composes every section in order
-│   ├── globals.css         # tokens, keyframes, glow-pill, chain, gold gradient
-│   └── fonts.ts            # next/font config
-├── components/
-│   ├── HeroV2.tsx          # ★ the hero — 2 pills on a connecting line
-│   ├── TrustBarV2.tsx
-│   ├── Nav.tsx             # floating glass pill nav
-│   ├── Footer.tsx
-│   ├── LandingJar.tsx      # the reusable jar (used everywhere)
-│   ├── LogoMark.tsx
-│   ├── Overline.tsx
-│   ├── Reveal.tsx          # IntersectionObserver-based reveal wrapper
-│   └── sections/
-│       ├── Problem.tsx
-│       ├── Solution.tsx
-│       ├── PhoneShowcase.tsx
-│       ├── FeaturesGrid.tsx
-│       ├── Calculator.tsx
-│       ├── Privacy.tsx
-│       ├── HowItWorks.tsx
-│       ├── FAQ.tsx
-│       └── FinalCTA.tsx
-├── public/
-│   └── img/                # drop your app screenshots in here
-├── .env.example
-├── next.config.mjs
-├── postcss.config.mjs
-├── tailwind.config.ts
-└── tsconfig.json
+```sh
+npm run test:waitlist
+npm run build
 ```
 
-## Email capture
+The eight endpoint tests cover consent, validation, normalization, request bounds, origin checks, bot honeypot, rate limits, duplicate responses and provider failures. See [reports/WAITLIST-QA.md](reports/WAITLIST-QA.md) for the live Supabase/browser results.
 
-The `FinalCTA` form POSTs the email to **Formspree**:
+## Main files
 
-1. Sign in to <https://formspree.io>, create a form, copy the form URL.
-2. `cp .env.example .env.local`
-3. Paste your form URL into `NEXT_PUBLIC_FORMSPREE_ENDPOINT`.
-4. Restart `npm run dev`.
+- `components/sections/FinalCTA.tsx`: consent, submission and confirmation UI.
+- `app/api/waitlist/route.ts` and `lib/waitlist.ts`: server-only signup endpoint.
+- `supabase/waitlist.sql`: private tables and atomic signup/rate-limit function.
+- `app/privacy`, `app/contact`, `app/terms`: working information pages.
 
-Until you set the env var, the form will fall back to a local "preview"
-success state (no network call) so you can still demo the page.
+## Deployment
 
-
-## Vercel-ready
-
-Standard Next.js 14 — no special build config. Vercel will auto-detect.
-
-```bash
-vercel        # link the project
-vercel --prod # ship
-```
-
-Don't forget to set `NEXT_PUBLIC_FORMSPREE_ENDPOINT` in the Vercel project
-settings (Production + Preview environments).
-
-## Status
-
-This scaffold has a **fully built hero** plus minimal stubs for the other
-sections so the page compiles end-to-end. Each remaining section
-(Problem → Footer) gets built faithfully from the design files in
-follow-up commits.
+Use the existing Vercel project linked to this repository. Configure all four environment variables for Preview and Production, then deploy the selected branch. Public support details are baked into the build, so redeploy after changing them. The complete setup and operator checklist are in [SUPABASE-WAITLIST.md](SUPABASE-WAITLIST.md).

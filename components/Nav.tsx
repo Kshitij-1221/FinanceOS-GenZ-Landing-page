@@ -36,7 +36,7 @@ export function Nav() {
             className="font-display text-[15.5px] font-extrabold text-fg-strong"
             style={{ letterSpacing: '-0.02em' }}
           >
-            FinanceOS
+            Blyth
           </span>
         </a>
 

@@ -28,9 +28,9 @@ import { Reveal } from '../Reveal';
 type IconName = 'lock' | 'eye' | 'shield';
 
 const CHECKLIST: Array<{ icon: IconName; label: string }> = [
-  { icon: 'lock',   label: 'On-device encryption' },
-  { icon: 'eye',    label: 'Zero tracking · no analytics SDK' },
-  { icon: 'shield', label: "We can't read your data — there's no key" },
+  { icon: 'lock',   label: 'Finance records stored on your device' },
+  { icon: 'eye',    label: 'No bank login required' },
+  { icon: 'shield', label: 'Optional AI, with review before saving' },
 ];
 
 export function Privacy() {
@@ -72,11 +72,9 @@ export function Privacy() {
                 textWrap: 'balance',
               }}
             >
-              Your money
+              Your records.
               <br />
-              never
-              <br />
-              <span className="gold-text">leaves your phone.</span>
+              <span className="gold-text">Your choice.</span>
             </h2>
           </Reveal>
 
@@ -90,9 +88,9 @@ export function Privacy() {
                 textWrap: 'pretty',
               }}
             >
-              No bank logins. No tracking. No selling your data. Everything
-              lives on your device &mdash; we genuinely can&rsquo;t see it, even
-              if we wanted to.
+              Your finance records stay on this device. When you choose AI, your
+              message and relevant financial details go to OpenAI. Voice input
+              also sends your recording for transcription. Manual tracking works without AI.
             </p>
           </Reveal>
 

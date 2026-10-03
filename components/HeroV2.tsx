@@ -146,7 +146,7 @@ export function HeroV2() {
       {/* Centre content channel — the whole hero now */}
       <div className="container-prose relative z-[4] text-center">
         <Reveal delay={0}>
-          <Overline>Your money, on autopilot</Overline>
+          <Overline>Your money, made clear</Overline>
         </Reveal>
         <Reveal delay={120}>
           <h1
@@ -222,7 +222,7 @@ export function HeroV2() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--success)' }}
               />
-              100% on-device
+              Local-first tracking
             </span>
             <span className="inline-flex items-center gap-1.5">
               <span
@@ -238,7 +238,7 @@ export function HeroV2() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--gold-soft)' }}
               />
-              Free forever
+              Early access
             </span>
           </div>
         </Reveal>

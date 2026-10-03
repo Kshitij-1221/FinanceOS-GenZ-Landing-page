@@ -33,7 +33,7 @@ import { Reveal } from '../Reveal';
 
 const STEPS = [
   { n: 1, title: 'Set your income + goal',     body: 'Sixty seconds. No bank login.' },
-  { n: 2, title: 'Log spends (or auto-track)', body: 'Tap to log. Or let smart-categorize do it.' },
+  { n: 2, title: 'Speak, type or tap', body: 'Review your entries, then save.' },
   { n: 3, title: 'Watch your jar fill',        body: 'Stay in budget. Streaks build. Calm follows.' },
 ] as const;
 

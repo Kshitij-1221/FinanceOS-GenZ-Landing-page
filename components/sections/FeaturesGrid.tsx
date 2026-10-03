@@ -41,9 +41,9 @@ type Item = {
 
 const FEATURES: Item[] = [
   {
-    title: 'Auto-fill jar',
+    title: 'Your savings forecast',
     kicker: 'Saving engine',
-    body: 'On salary day, your goal amount auto-drops into the jar. You can’t spend what isn’t there.',
+    body: 'See projected month-end savings against your target as you record income, plans and spending.',
     visual: <FeatureJarPulse />,
   },
   {
@@ -61,19 +61,19 @@ const FEATURES: Item[] = [
   {
     title: 'Portfolio',
     kicker: 'All in one place',
-    body: 'Track SIPs, stocks, gold — every asset folds into your net worth view.',
+    body: 'Track your recorded SIPs, funds, gold and other holdings in one place.',
     visual: <FeaturePortfolio />,
   },
   {
-    title: 'Calm AI insights',
-    kicker: 'Soft nudges',
-    body: '“You prioritized comfort this month — that’s OK.” Insight, not judgment.',
+    title: 'Speak or type an entry',
+    kicker: 'Optional AI',
+    body: 'Describe expenses, bonuses, investments and goals. Check the proposed entries, then save.',
     visual: <FeatureAI />,
   },
   {
-    title: '100% private',
+    title: 'Local-first records',
     kicker: 'On-device',
-    body: 'No bank login. No tracking. No selling your data. Genuinely. We can’t see it.',
+    body: 'Manual tracking stays on your device. AI processes only the requests and context you choose to send.',
     visual: <FeaturePrivacy />,
   },
 ];
@@ -323,7 +323,7 @@ function FeaturePortfolio() {
           textTransform: 'uppercase',
         }}
       >
-        <span>Net worth</span>
+        <span>Recorded holdings</span>
         <span
           className="font-mono"
           style={{
@@ -388,11 +388,11 @@ function FeatureAI() {
             textTransform: 'uppercase',
           }}
         >
-          Insight
+          Draft preview
         </span>
       </div>
       <div className="text-fg" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-        &ldquo;You prioritized comfort this month &mdash; and that&rsquo;s okay.&rdquo;
+        &ldquo;Lunch ₹250, cab ₹180. Ready for you to review.&rdquo;
       </div>
     </div>
   );

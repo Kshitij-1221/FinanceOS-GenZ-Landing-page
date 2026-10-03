@@ -5,7 +5,7 @@
 
 import { LogoMark } from './LogoMark';
 
-const LINKS = ['Privacy', 'Terms', 'Contact', 'Twitter', 'Instagram'];
+const LINKS = [{ label: 'Privacy', href: '/privacy' }, { label: 'Early access', href: '/terms' }, { label: 'Contact', href: '/contact' }];
 
 export function Footer() {
   return (
@@ -21,7 +21,7 @@ export function Footer() {
               className="font-display text-[15px] font-extrabold text-fg-strong"
               style={{ letterSpacing: '-0.01em' }}
             >
-              FinanceOS
+              Blyth
             </div>
             <div className="mt-0.5 text-[11.5px] text-fg-muted">
               Built for focus.
@@ -32,11 +32,11 @@ export function Footer() {
         <div className="flex flex-wrap gap-6">
           {LINKS.map((l) => (
             <a
-              key={l}
-              href="#"
+              key={l.label}
+              href={l.href}
               className="text-[13px] text-fg-muted no-underline transition-colors hover:text-gold-soft"
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </div>

@@ -235,7 +235,7 @@ function PhoneFrame({
           /* eslint-disable-next-line @next/next/no-img-element -- intentional: raw <img> for object-fit cover + onError fallback */
           <img
             src={src}
-            alt={`FinanceOS — ${label} screen`}
+            alt={`Blyth — ${label} screen`}
             loading="lazy"
             onError={() => setImgError(true)}
             className="h-full w-full"

@@ -34,26 +34,11 @@ import { Overline } from '../Overline';
 import { Reveal } from '../Reveal';
 
 const ITEMS = [
-  {
-    q: 'Is my data safe?',
-    a: "Yes — and that's not marketing. Everything lives on your device, encrypted. No bank login is required, and there's no key on our servers to decrypt your data even if we wanted to. We've designed ourselves out of being able to see it.",
-  },
-  {
-    q: 'Does it connect to my bank?',
-    a: 'No — by design. You either tap to log, or let our SMS-based auto-tracking categorize for you (coming soon). No third-party aggregator, no screen-scraping, no Account Aggregator login.',
-  },
-  {
-    q: 'Is it free?',
-    a: "The full app is free during early access. We'll eventually offer a paid tier for households, multi-jar goals, and advanced AI insights — but the core jar, budgets, and goals will stay free.",
-  },
-  {
-    q: 'Android and iPhone?',
-    a: "Yes — both. We're shipping iOS first in early access, with Android right behind. Join the list and you'll get the link for whichever platform you use.",
-  },
-  {
-    q: 'How is this different from other finance apps?',
-    a: "Other apps treat money like a spreadsheet — categories, charts, anxiety. FinanceOS treats it like a feeling. The jar is your single number. Stay in budget, the jar fills, the streak grows. That's the whole loop.",
-  },
+  { q: 'Where does my data go?', a: 'Finance records are stored on your device. Optional AI sends your message and relevant financial context to OpenAI; voice sends your recording too. Joining this waitlist stores your email with Supabase. See the privacy notice for details.' },
+  { q: 'Does it connect to my bank?', a: 'No. Blyth is a tracker, not a bank connection. You add entries manually or describe them to the optional AI assistant, then review and save.' },
+  { q: 'Is it free?', a: 'Joining the early-access list is free. App pricing and AI usage limits will be shared before access opens.' },
+  { q: 'Android and iPhone?', a: 'We are preparing iPhone early access first. Android availability will be announced separately. Joining the waitlist does not create an app account.' },
+  { q: 'What does the jar mean?', a: 'It shows projected month-end savings against your target, based on the entries and plans you record. It is not a verified bank balance, and Blyth does not move money.' },
 ] as const;
 
 export function FAQ() {

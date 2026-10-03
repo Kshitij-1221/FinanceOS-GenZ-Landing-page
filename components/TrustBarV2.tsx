@@ -12,9 +12,9 @@
 import { Reveal } from './Reveal';
 
 const STATS = [
-  { value: '100%',  label: 'On-device privacy',    mono: true,  accent: true  },
+  { value: 'Local', label: 'Records on your device', mono: false,  accent: true  },
   { value: '0',     label: 'Bank logins required', mono: true,  accent: false },
-  { value: '0',     label: 'Ads, ever',            mono: true,  accent: false },
+  { value: '0',     label: 'Ads in the app',            mono: true,  accent: false },
   { value: 'India', label: 'Made for',             mono: false, accent: true  },
 ] as const;
 

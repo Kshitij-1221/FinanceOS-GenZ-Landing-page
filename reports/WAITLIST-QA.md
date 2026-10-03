@@ -1,4 +1,4 @@
-# Waitlist QA — 3 October 2026
+# Waitlist QA — 3–4 October 2026
 
 ## Verified
 
@@ -16,4 +16,14 @@ The single synthetic signup remains visible in Supabase Table Editor for the own
 
 ## Scope
 
-The browser/database checks above used the local Next.js server against the real configured Supabase project. Hosted deployment verification is recorded separately when completed. Native app login and financial cloud sync are not part of this waitlist integration.
+The browser/database checks above used the local Next.js server against the real configured Supabase project. Native app login and financial cloud sync are not part of this waitlist integration.
+
+## Hosted preview — 4 October
+
+- [Vercel preview](https://finance-os-gen-z-landing-page-ojwlcbk6z.vercel.app) deployed successfully with Next.js build, lint and type checks passing.
+- All four required environment variables are configured for Preview. The existing Supabase integration already supplied Production database settings; the hash secret and support email were added for Production too. Production itself was not redeployed or tested.
+- An authenticated Vercel CLI request with the preview's browser Origin submitted the same synthetic signup: HTTP 200, `{ "ok": true }`.
+- A restricted Supabase read after that request still returned one matching row with consent recorded.
+- An invalid email sent to the deployed endpoint returned HTTP 400 with a recoverable validation message.
+- Preview retains Vercel Authentication. The in-app browser reached its login page, so hosted UI submission was not claimed as tested; form UI was verified locally. Open the preview in a browser signed into the project owner's Vercel account.
+- The existing production domain has not been promoted to this feature. No announcement email was sent.

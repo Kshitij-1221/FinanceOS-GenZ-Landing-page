@@ -20,7 +20,7 @@ Abuse protection includes a honeypot, 4 KiB request limit, same-origin browser c
 4. Restart the local server. Keep keys out of chat, commits, screenshots and client-side environment variables.
 5. Submit the form and inspect **Table Editor → waitlist_signups**. Repeat the same email and verify one row remains.
 
-The current local configuration has been connected to the user's project and a real signup verified. This does not automatically configure Vercel.
+The current local configuration has been connected to the user's project and a real signup verified. On 4 October 2026 the existing Vercel project was also configured for Preview, and the deployed signup endpoint was verified. The preview requires the owner's Vercel login; the production domain has not yet been promoted to this version. See [QA results](reports/WAITLIST-QA.md).
 
 ## Vercel setup
 

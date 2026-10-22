@@ -20,7 +20,7 @@ Abuse protection includes a honeypot, 4 KiB request limit, same-origin browser c
 4. Restart the local server. Keep keys out of chat, commits, screenshots and client-side environment variables.
 5. Submit the form and inspect **Table Editor → waitlist_signups**. Repeat the same email and verify one row remains.
 
-The current local configuration has been connected to the user's project and a real signup verified. On 4 October 2026 the existing Vercel project was also configured for Preview, and the deployed signup endpoint was verified. The preview requires the owner's Vercel login; the production domain has not yet been promoted to this version. See [QA results](reports/WAITLIST-QA.md).
+The current configuration is live at https://www.getblyth.com as of 22 October 2026. The apex domain redirects to www over HTTPS. Production pages, browser signup, validation and duplicate handling were verified against the restored Supabase project. See [QA results](reports/WAITLIST-QA.md).
 
 ## Vercel setup
 
@@ -41,6 +41,8 @@ The synthetic QA address `blyth-qa-20261003@example.com` was deliberately left a
 The privacy notice commits to deleting waitlist entries within 90 days after the early-access announcement unless a person separately opts into an ongoing service. Schedule and perform that deletion when announcing; it is not an automated job yet. Process removal/copy requests through the configured support inbox, verifying the requester controls the address. Do not repurpose the list for unrelated marketing.
 
 Supabase Free projects can pause after inactivity. Check project health and a signup before announcing the landing page. If service fails, the visitor sees an error and can retry; the UI does not claim success without database confirmation.
+
+On 22 October 2026 the dashboard confirmed this project was paused. **Resume project → Resume** restored it to Healthy; the existing synthetic signup remained present. If this recurs, resume the existing project rather than creating a replacement database, then test the live form. Free projects with low activity over seven days can pause; paid plans are exempt. No paid upgrade was made. Review this availability limitation before public launch: [Supabase project pausing](https://supabase.com/docs/guides/platform/free-project-pausing).
 
 ## Boundaries
 

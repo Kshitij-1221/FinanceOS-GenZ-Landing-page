@@ -243,6 +243,25 @@ function PhoneFrame({
           />
         )}
 
+        {/* Keep the brand label current over the legacy dashboard capture. */}
+        {!imgError && label === 'Dashboard' && (
+          <div
+            aria-hidden="true"
+            className="absolute font-display font-extrabold text-white"
+            style={{
+              left: '14%',
+              top: '7.1%',
+              width: '28%',
+              height: '2.2%',
+              background: '#080808',
+              fontSize: 9,
+              lineHeight: '12px',
+            }}
+          >
+            Blyth
+          </div>
+        )}
+
         {/* Notch overlay — sits at top centre of the inner phone screen */}
         <div
           aria-hidden="true"

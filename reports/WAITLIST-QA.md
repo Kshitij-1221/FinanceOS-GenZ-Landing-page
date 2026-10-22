@@ -27,3 +27,14 @@ The browser/database checks above used the local Next.js server against the real
 - An invalid email sent to the deployed endpoint returned HTTP 400 with a recoverable validation message.
 - Preview retains Vercel Authentication. The in-app browser reached its login page, so hosted UI submission was not claimed as tested; form UI was verified locally. Open the preview in a browser signed into the project owner's Vercel account.
 - The existing production domain has not been promoted to this feature. No announcement email was sent.
+
+## Production and database recovery — 22 October 2026
+
+- Resumed the existing paused Supabase project through its dashboard. It reached **Healthy**. A restricted read returned HTTP 200 and found the original synthetic signup and consent version intact.
+- Production deployment `dpl_52LrkKrDvaKkxPpH7qT2FuEJYGhW` is Ready at https://www.getblyth.com. The existing Vercel project/repository names remain unchanged; public branding is Blyth.
+- Page title, navigation, footer and image descriptions use Blyth. The legacy dashboard screenshot's name is replaced with a code-rendered Blyth label in the showcase; its source PNG is otherwise unchanged. Visually checked the deployed showcase in Chrome.
+- Added the owned domain as metadata base and Blyth as the Open Graph site name.
+- All eight waitlist tests and the production build (including lint/types) passed. Public home, privacy, terms and contact returned HTTP 200 without authentication and contain no FinanceOS text in their HTML.
+- Public invalid-email request returned HTTP 400. Consented submission using the existing synthetic email returned HTTP 200 and `{ "ok": true }`.
+- The live Chrome form displayed **You're in!** after the same consented submission. A subsequent restricted database read still found exactly one matching row with consent version `early-access-2026-10-03`.
+- No announcement email was sent, no new database was created and no paid plan was enabled. Resend production sending-domain setup remains a separate launch step.

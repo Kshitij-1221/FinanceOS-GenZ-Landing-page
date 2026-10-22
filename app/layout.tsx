@@ -10,10 +10,12 @@ import './globals.css';
 export const viewport: Viewport = { themeColor: '#050505' };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.getblyth.com'),
   title: 'Blyth — Watch your savings fill up',
   description:
     'The calm finance app for India. Set a goal, watch your jar fill, and finally feel in control of your money. Local-first tracking. No bank login.',
   openGraph: {
+    siteName: 'Blyth',
     title: 'Blyth — Watch your savings fill up',
     description: 'The calm finance app for India. Local-first tracking. No bank login.',
     type: 'website',

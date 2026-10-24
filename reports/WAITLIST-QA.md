@@ -57,3 +57,10 @@ The browser/database checks above used the local Next.js server against the real
 - Reloaded and resubmitted the same address: success UI; the outbox still had one attempt and unchanged acceptance/provider ID. No duplicate send was queued.
 - Recovery route without credentials returned 401; an authorized production invocation returned 200 with `{ accepted: 0, queued: 0, skipped: 0 }`. Daily cron is deployed; a scheduled run has not yet been observed.
 - No old subscriber backfill or launch announcement was sent. A second consenting recipient/provider remains to be tested; a verified domain cannot guarantee inbox placement. Supabase app OTP sender remains separate.
+
+## Sending-key rotation — 24 October 2026
+
+- Replaced the server-only production Resend key and deployed `dpl_3N66yYECeKTD7Dasw3NCjNS7FBgH` to https://www.getblyth.com.
+- Production POST with Resend’s official `delivered+blyth-key-rotation-20261024@resend.dev` test address returned 200 / ok. Its outbox has one attempt, accepted at 12:08:52 UTC (17:38 IST), with no error. Resend’s replacement-key activity confirms production used the new credential. This is provider simulation, not another human inbox test.
+- The labeled provider-test signup remains for inspection; exclude it from future launch announcements. No extra email was sent to the founder for this rotation check.
+- Old landing-key revocation awaits the owner’s final dashboard action; the separate Onboarding key was not changed.

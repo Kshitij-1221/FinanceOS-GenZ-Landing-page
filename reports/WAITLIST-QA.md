@@ -63,4 +63,4 @@ The browser/database checks above used the local Next.js server against the real
 - Replaced the server-only production Resend key and deployed `dpl_3N66yYECeKTD7Dasw3NCjNS7FBgH` to https://www.getblyth.com.
 - Production POST with Resend’s official `delivered+blyth-key-rotation-20261024@resend.dev` test address returned 200 / ok. Its outbox has one attempt, accepted at 12:08:52 UTC (17:38 IST), with no error. Resend’s replacement-key activity confirms production used the new credential. This is provider simulation, not another human inbox test.
 - The labeled provider-test signup remains for inspection; exclude it from future launch announcements. No extra email was sent to the founder for this rotation check.
-- Old landing-key revocation awaits the owner’s final dashboard action; the separate Onboarding key was not changed.
+- Owner revoked the old landing key. Verified in the Resend dashboard on 24 October: only the replacement landing key and the separate Onboarding key remain. Rotation complete.

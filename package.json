@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:waitlist": "node --test tests/waitlist.cjs"
+    "test:waitlist": "node --test tests/waitlist.cjs tests/welcome.cjs"
   },
   "dependencies": {
     "framer-motion": "^11.11.17",
@@ -17,6 +17,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.11",
     "@types/node": "^20.17.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

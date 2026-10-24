@@ -1,0 +1,5 @@
+$ORIGIN getblyth.com.
+$TTL 300
+resend._domainkey.mail IN TXT "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCobXggwmLbtJ45q6hM8pDp1IgxPdjB0376zTbU9YJSNTSVQigu7B1kHIk5OmjLpbco+iDGlfAvQr7b/VT1Odb38cIwi1+IumQc0eOmSJIDw5+Af/eb0//adF0fEn9Wfi9SWVlW3go2a2mBb1UFSUZMrbii6RBLazSO3w9hChdU0wIDAQAB"
+rsend.mail IN CNAME rsend-apne1.forge.rmta.net.
+send.mail IN CNAME send.forge.rmta.net.

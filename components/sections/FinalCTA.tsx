@@ -61,13 +61,13 @@ export function FinalCTA() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitted || submitting) return;
-    if (!email.trim() || !consent) { setErrorMsg('Enter your email and agree to receive the early-access email.'); return; }
+    if (!email.trim() || !consent) { setErrorMsg('Enter your email and agree to receive the welcome and early-access emails.'); return; }
     setStatus('submitting'); setErrorMsg(null);
     try {
       const response = await fetch('/api/waitlist', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), consent, website }),
-        signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({ email: email.trim(), consent, website, consentVersion: 'welcome-and-early-access-2026-10-23' }),
+        signal: AbortSignal.timeout(35000),
       });
       const data = await response.json();
       if (!response.ok || data.ok !== true) {
@@ -130,7 +130,7 @@ export function FinalCTA() {
             }}
           >
             Join the early access list &mdash; be first to feel calm about money.
-            One email when we ship. No spam, ever.
+            A welcome email now, and a heads-up when we launch. No spam.
           </p>
         </Reveal>
 
@@ -205,7 +205,7 @@ export function FinalCTA() {
 
             <label className="flex items-start gap-2 text-left text-sm text-fg-muted">
               <input type="checkbox" required checked={consent} onChange={e => setConsent(e.target.checked)} disabled={submitted || submitting} className="mt-1" />
-              <span>Email me when Blyth early access opens. I have read the <a className="text-gold-soft underline" href="/privacy">privacy notice</a>.</span>
+              <span>Send me a welcome email and let me know when Blyth early access opens. I have read the <a className="text-gold-soft underline" href="/privacy">privacy notice</a>.</span>
             </label>
             <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px' }}>
               <label>Website<input name="website" value={website} onChange={e => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" /></label>
@@ -261,6 +261,7 @@ export function FinalCTA() {
 
           {/* Error message — replaces the trust line while in error state.
               Polite aria-live so screen readers announce without stealing focus. */}
+          {submitted && <p role="status" className="mt-4 text-sm text-fg-muted">You're on the list. We'll email when early access opens.</p>}
           {status === 'error' && (
             <div
               role="status"

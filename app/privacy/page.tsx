@@ -2,8 +2,8 @@ import { InfoPage, SupportContact } from '../../components/InfoPage';
 
 export default function PrivacyPage() {
   return <InfoPage title="Blyth privacy notice">
-    <p>Updated 3 October 2026. This notice covers the early-access waitlist and describes the current app prototype.</p>
-    <p>When you join, we store your email, signup time, source and the version of the consent statement in Supabase. We use this to send the early-access announcement you requested. Joining does not create an app account or subscribe you to unrelated marketing.</p>
+    <p>Updated 23 October 2026. This notice covers the early-access waitlist and describes the current app prototype.</p>
+    <p>When you join, we store your email, signup time, source and the version of the consent statement in Supabase. We use this to send a welcome confirmation and the early-access announcement you requested. Resend processes your email address and message to send these emails. We also keep a private delivery queue with message content, attempt times and provider message IDs so we can retry failures and avoid duplicate welcome emails. A provider accepting a message does not guarantee inbox delivery. Joining does not create an app account or subscribe you to unrelated marketing.</p>
     <p>The site is hosted on Vercel. To limit automated submissions, the server derives a temporary, keyed hash from your IP address. This hash changes daily; the abuse counters expire after a day and are removed on later requests. The waitlist database does not store the raw IP address. Hosting providers may maintain their own operational logs.</p>
     <p>Only the server and authorised project administrators can access the waitlist. We do not sell the email list. You can ask to remove your email before the announcement, or request a copy of your signup details, by contacting <SupportContact />.</p>
     <p>We will retain the waitlist only while preparing and sending early access, and remove entries within 90 days after the announcement unless you separately choose an ongoing service. Removal requests are handled manually during this early stage.</p>

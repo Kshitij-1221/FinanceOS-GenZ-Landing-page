@@ -1,0 +1,5 @@
+reports/
+tests/
+supabase/
+*.md
+.env*

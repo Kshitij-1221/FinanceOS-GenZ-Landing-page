@@ -3,7 +3,7 @@ import { createHmac } from 'node:crypto';
 interface Config { url?: string; key?: string; hashSecret?: string }
 const reply = (status: number, body: object) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
 
-export function createWaitlistHandler({ config, fetchImpl = fetch }: { config: () => Config; fetchImpl?: typeof fetch }) {
+export function createWaitlistHandler({ config, fetchImpl = fetch, sendWelcome }: { config: () => Config; fetchImpl?: typeof fetch; sendWelcome?: (email: string) => Promise<unknown> }) {
   return async (request: Request) => {
     const origin = request.headers.get('origin');
     if (origin && origin !== new URL(request.url).origin) return reply(403, { error: 'Please join from the Blyth website.' });
@@ -33,7 +33,10 @@ export function createWaitlistHandler({ config, fetchImpl = fetch }: { config: (
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'local';
     const hash = createHmac('sha256', hashSecret).update(`${new Date().toISOString().slice(0, 10)}:${ip}`).digest('hex');
     try {
-      const response = await fetchImpl(`${url.replace(/\/$/, '')}/rest/v1/rpc/join_blyth_waitlist`, {
+      // Cached old forms retain their original consent and never trigger a welcome.
+      const welcome = input.consentVersion === 'welcome-and-early-access-2026-10-23';
+      const rpc = welcome ? 'join_blyth_waitlist_v2' : 'join_blyth_waitlist';
+      const response = await fetchImpl(`${url.replace(/\/$/, '')}/rest/v1/rpc/${rpc}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json', apikey: key,
           ...(key.startsWith('sb_secret_') ? {} : { Authorization: `Bearer ${key}` }) },
         body: JSON.stringify({ p_email: email, p_client_hash: hash }), signal: AbortSignal.timeout(10000), cache: 'no-store',
@@ -42,6 +45,9 @@ export function createWaitlistHandler({ config, fetchImpl = fetch }: { config: (
       const result = await response.json();
       if (result === 'limited') return reply(429, { error: 'Too many attempts. Please try again in an hour.' });
       if (result !== 'accepted') return reply(503, { error: 'We could not confirm your signup. Please try again.' });
+      // A provider outage must not turn a successfully stored signup into an error.
+      // The private outbox keeps pending mail; public responses never reveal membership.
+      if (welcome && sendWelcome) { try { await sendWelcome(email); } catch { /* Saved; retry from the outbox. */ } }
       return reply(200, { ok: true });
     } catch { return reply(503, { error: 'We could not confirm your signup. Please try again shortly.' }); }
   };

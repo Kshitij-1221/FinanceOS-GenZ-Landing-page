@@ -31,3 +31,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*
+# Local dashboard screenshots can contain unrelated browser tabs.
+reports/setup/*.png
+reports/welcome-email-preview.html

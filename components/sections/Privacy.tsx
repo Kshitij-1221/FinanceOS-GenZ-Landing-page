@@ -1,5 +1,5 @@
 /**
- * Privacy — "Your money never leaves your phone." section.
+ * Privacy — Local tracking and optional data-sharing section.
  *
  * Ported 1:1 from landing-v2/sections-bottom.jsx > Privacy + PrivIcon.
  *
@@ -88,7 +88,7 @@ export function Privacy() {
                 textWrap: 'pretty',
               }}
             >
-              Your finance records stay on this device. When you choose AI, your
+              Your finance records are saved on this device. Cloud backup, where available, only uploads when you choose Back up now. When you choose AI, your
               message and relevant financial details go to OpenAI. Voice input
               also sends your recording for transcription. Manual tracking works without AI.
             </p>

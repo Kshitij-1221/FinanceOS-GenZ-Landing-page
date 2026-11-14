@@ -34,11 +34,11 @@ import { Overline } from '../Overline';
 import { Reveal } from '../Reveal';
 
 const ITEMS = [
-  { q: 'Where does my data go?', a: 'Finance records are stored on your device. Optional AI sends your message and relevant financial context to OpenAI; voice sends your recording too. Joining this waitlist stores your email with Supabase. See the privacy notice for details.' },
+  { q: 'Where does my data go?', a: 'Finance records are stored on your device. In builds with Backup & restore, choosing Back up now stores a snapshot with Supabase; uploads are optional and manual. Optional AI sends your message and relevant financial context to OpenAI; voice sends your recording too. Joining this waitlist stores your email with Supabase. See the privacy notice for details.' },
   { q: 'Does it connect to my bank?', a: 'No. Blyth is a tracker, not a bank connection. You add entries manually or describe them to the optional AI assistant, then review and save.' },
-  { q: 'Is it free?', a: 'Joining the early-access list is free. App pricing and AI usage limits will be shared before access opens.' },
+  { q: 'Is it free?', a: 'Joining the early-access list and manual finance tracking are free. AI entry has a limited free allowance. A paid AI plan is not available yet; pricing will be shown before any future subscription.' },
   { q: 'Android and iPhone?', a: 'We are preparing iPhone early access first. Android availability will be announced separately. Joining the waitlist does not create an app account.' },
-  { q: 'What does the jar mean?', a: 'It shows projected month-end savings against your target, based on the entries and plans you record. It is not a verified bank balance, and Blyth does not move money.' },
+  { q: 'What does the jar mean?', a: 'The liquid shows your estimated available jar money after recorded commitments, reserved budgets and spending. Month-end savings are shown separately against your target. Moving existing savings into the jar does not count as new savings. These are estimates, not verified bank balances; Blyth does not move money.' },
 ] as const;
 
 export function FAQ() {

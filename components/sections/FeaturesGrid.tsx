@@ -55,7 +55,7 @@ const FEATURES: Item[] = [
   {
     title: 'Goals',
     kicker: 'Visual progress',
-    body: 'Goa trip · new laptop · emergency fund. Each gets its own jar with its own pace.',
+    body: 'Goa trip · new laptop · emergency fund. Set a target and track the money you assign to each goal.',
     visual: <FeatureGoals />,
   },
   {
@@ -73,7 +73,7 @@ const FEATURES: Item[] = [
   {
     title: 'Local-first records',
     kicker: 'On-device',
-    body: 'Manual tracking stays on your device. AI processes only the requests and context you choose to send.',
+    body: 'Manual tracking is saved on your device. Cloud backup, where available, is a separate manual choice. AI processes the requests and context you choose to send.',
     visual: <FeaturePrivacy />,
   },
 ];

@@ -1,6 +1,6 @@
 # Blyth landing page: copy remake
 
-Complete rewrite of every string on getblyth.com, its subpages, metadata, form states and image alt text. Draft v2, 18 Nov 2026 (Claude). **Nothing here is live.** Sections go to Codex only after they're marked ✅.
+Complete rewrite of every string on getblyth.com, its subpages, metadata, form states and image alt text. Draft v2, 18 Nov 2026 (Claude). **Nothing here is live.** Part B wording approved by the owner and implemented locally 19 November 2026; no landing push or deployment.
 
 How to review: read **Part A** once (the strategy). Then go through Part B section by section. Each line shows **Now → New**; where there's a real choice there's an **Alt**. Mark each section ✅, or write changes beside it.
 
@@ -61,14 +61,14 @@ Calm, warm, plain, a little playful. Short sentences. A smart friend who's good 
 
 # Part B: section by section
 
-## 1. Navigation ☐
+## 1. Navigation ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Links | Features · How it works · Privacy · FAQ | Keep |
 | Button | Get the app → | **Get early access →** |
 | Mobile menu labels | Open menu / Close menu | Keep (screen-reader text) |
 
-## 2. Hero ☐
+## 2. Hero ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | YOUR MONEY, MADE CLEAR | **MONEY, WITHOUT THE MATHS** · *Alt:* THE MONEY JAR APP |
@@ -78,7 +78,7 @@ Calm, warm, plain, a little playful. Short sentences. A smart friend who's good 
 | Secondary CTA | See how it works → | **See how it works ↓** (it scrolls down, so use a down arrow) |
 | Pills | Local-first tracking · No bank login · Early access | **Stays on your phone · Free to track · AI optional** |
 
-## 3. Trust bar ☐
+## 3. Trust bar ✅ implemented
 Four facts, each said once on the page.
 | Now | New |
 | --- | --- |
@@ -87,7 +87,7 @@ Four facts, each said once on the page.
 | 0 · ADS IN THE APP | **0 · ADS** |
 | India · MADE FOR | **~1 min · TO SET UP YOUR MONTH** |
 
-## 4. Problem ☐
+## 4. Problem ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | SOUND FAMILIAR? | Keep |
@@ -97,7 +97,7 @@ Four facts, each said once on the page.
 | Pain 3 | Saving feels like a chore. | **"I'll start saving next month." Every month.** |
 | *New* closing line | (none) | **It's not you. Nothing shows you the whole picture.** (bridges into the jar) |
 
-## 5. The Money Jar ☐
+## 5. The Money Jar ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | THE SIGNATURE | **THE MONEY JAR** |
@@ -107,7 +107,7 @@ Four facts, each said once on the page.
 | Widget label | LIVE AS YOU SCROLL | **SCROLL TO FILL IT** |
 | Jar tiers | Just started · Filling up · Almost there · Overflowing | Keep (playful, fits) |
 
-## 6. Real app showcase ☐
+## 6. Real app showcase ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | THE REAL APP | Keep |
@@ -118,7 +118,7 @@ Four facts, each said once on the page.
 | Alt text | "Blyth — Promise screen" etc. | "Blyth home screen with the Money Jar showing what's left this month" · "Logging a ₹180 expense in Blyth" · "Blyth goals screen with a Goa trip 25% funded" |
 | Missing-image fallback | Drop your PNG at /public/img/screen-… | Dev-only text; make sure it never shows in production |
 
-## 7. Features ☐
+## 7. Features ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | EVERYTHING YOU NEED | **WHAT'S INSIDE** |
@@ -172,7 +172,7 @@ Four facts, each said once on the page.
 | Body | Manual tracking is saved on your device. Cloud backup, where available, is a separate manual choice. AI processes the requests and context you choose to send. | **Your records live on your device. Back up only when you choose.** |
 | Widget label | LIVES ON YOUR PHONE | **ON YOUR PHONE** |
 
-## 8. Calculator ☐
+## 8. Calculator ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | PLAY WITH IT | **TRY IT** |
@@ -183,7 +183,7 @@ Four facts, each said once on the page.
 | Result line | saved this year · 35% of income | **saved · 35% of your income** |
 | *New* footnote | (none) | **A simple projection: monthly saving × 12.** (honest, small text) |
 
-## 9. Privacy ☐
+## 9. Privacy ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | YOUR COMPETITIVE WEAPON 🚩 | **PRIVACY** |
@@ -194,7 +194,7 @@ Four facts, each said once on the page.
 | Point 3 | Optional AI, with review before saving | **AI only when you ask, and you approve every entry** |
 | *New* link | (none) | **Read the full privacy notice →** |
 
-## 10. How it works ☐
+## 10. How it works ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | HOW IT WORKS | Keep |
@@ -203,7 +203,7 @@ Four facts, each said once on the page.
 | Step 2 | Speak, type or tap / Review your entries, then save. | **Log as you go** / **Tap it, type it, or just say it. Check, then save.** |
 | Step 3 | Watch your jar fill / Stay in budget. Streaks build. Calm follows. | **Watch your jar** / **Stay within budget, keep your streak, see what you'll save.** |
 
-## 11. FAQ ☐
+## 11. FAQ ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | FAQ | Keep |
@@ -232,7 +232,7 @@ Order: most-asked first. All answers checked against current app behaviour.
 9. **Who's building Blyth?**
    I'm Kshitij Gupta, an independent founder. I'm building the calm money app I always wanted. Follow the build on X: @gupta_1203.
 
-## 12. Final CTA and signup form ☐
+## 12. Final CTA and signup form ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Overline | BE FIRST | **EARLY ACCESS** |
@@ -250,7 +250,7 @@ Order: most-asked first. All answers checked against current app behaviour.
 | Error: network | Couldn't submit. Try again? | Merge into the server message above (one error voice) |
 | Line under form | Be part of the first group · Made for India · Built for focus | **Be one of the first to try Blyth.** |
 
-## 13. Footer ☐
+## 13. Footer ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Tagline | Built for focus. | **Money, without the maths.** (matches hero overline) |
@@ -261,7 +261,7 @@ Order: most-asked first. All answers checked against current app behaviour.
 | *New* social | (none) | ✅ **Follow the build:** X (@gupta_1203) · Instagram (@k._dumps_) |
 | *New* copyright | (none) | **© 2026 Blyth** |
 
-## 14. Metadata (Google, link previews, browser tabs) ☐
+## 14. Metadata (Google, link previews, browser tabs) ✅ implemented
 | Element | Now | New |
 | --- | --- | --- |
 | Home title | Blyth — Watch your savings fill up | Keep |
@@ -271,7 +271,7 @@ Order: most-asked first. All answers checked against current app behaviour.
 | Terms page title | (same as home) 🚩 | **About early access · Blyth** |
 | Contact page title | (same as home) 🚩 | **Contact · Blyth** |
 
-## 15. Subpages ☐
+## 15. Subpages ✅ implemented
 **Privacy notice** (`/privacy`): the facts are accurate. The problem is readability: one long legal wall.
 - Add a **"The short version"** box at the top: records on your phone · backup only when you tap *Back up now* · AI optional, sent to OpenAI when used · waitlist stores your email only · we never sell data.
 - Split the rest under headings: *Waitlist* · *Website & hosting* · *App: records* · *App: AI* · *App: account* · *App: backup* · *Retention & your rights* · *Contact*.
@@ -301,3 +301,12 @@ Order: **words first, then visuals**, so the design is built around final copy. 
 - **Live micro-interactions:** numbers count up, cards respond to hover/tap, the jar reacts to the calculator (already partly there).
 - **New footer:** last CTA, grouped links, follow-the-build socials, founder credit.
 - Re-capture all app screens after the app UI-upgrade week, so we do it once.
+
+## Implementation record — 19 November 2026
+- Sections 1–15 use the main New wording; Keep rows retained. No Alt choices used.
+- Existing screenshot files are deliberately unchanged; their approved names, captions and alt text are updated. Re-capture remains Part C. Personal Gmail is retained per the owner override.
+- Privacy facts retained under the eight requested headings, with the approved short-version box; provider retention verification remains a pre-publication task.
+- Mobile-only fit corrections: trust-cell inset now clamps from 12–22px so “~1 min” stays on one line; the stacked solution grid uses minmax(0, 1fr) so copy stays inside the viewport. No fonts, colours or animations changed.
+- New consent label: welcome-and-early-access-2026-11-18. Server accepts this and welcome-and-early-access-2026-10-23. No Supabase schema/function or Resend delivery changes.
+- Consent audit limitation: existing join_blyth_waitlist_v2 SQL records the October label internally. Distinguishing stored wording versions requires a separately approved database-function change; this task only changes form/server eligibility, as instructed.
+- Verification and screenshots: reports/copy-remake/README.md. Landing commits remain local, not pushed/deployed.

@@ -1,4 +1,7 @@
+import type { Metadata } from 'next';
 import { InfoPage, SupportContact } from '../../components/InfoPage';
+
+export const metadata: Metadata = { title: "Contact · Blyth" };
 
 export default function ContactPage() {
   return <InfoPage title="Contact Blyth">

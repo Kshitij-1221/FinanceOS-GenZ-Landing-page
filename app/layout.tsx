@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.getblyth.com'),
   title: 'Blyth — Watch your savings fill up',
   description:
-    'The calm finance app for India. Set a goal, watch your jar fill, and finally feel in control of your money. Local-first tracking. No bank login.',
+    "Blyth turns your salary, bills, SIPs and spending into one simple jar, so you always know what's left to save. No bank login. Free to track.",
   openGraph: {
     siteName: 'Blyth',
     title: 'Blyth — Watch your savings fill up',
-    description: 'The calm finance app for India. Local-first tracking. No bank login.',
+    description: "One simple jar that shows what's left to save. No bank login. Free to track.",
     type: 'website',
   },
 };

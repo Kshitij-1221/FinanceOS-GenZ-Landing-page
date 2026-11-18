@@ -1,4 +1,7 @@
+import type { Metadata } from 'next';
 import { InfoPage, SupportContact } from '../../components/InfoPage';
+
+export const metadata: Metadata = { title: "About early access · Blyth" };
 
 export default function EarlyAccessPage() {
   return <InfoPage title="About early access">

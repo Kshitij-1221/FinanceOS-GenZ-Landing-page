@@ -33,8 +33,9 @@ export function createWaitlistHandler({ config, fetchImpl = fetch, sendWelcome }
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'local';
     const hash = createHmac('sha256', hashSecret).update(`${new Date().toISOString().slice(0, 10)}:${ip}`).digest('hex');
     try {
-      // Cached old forms retain their original consent and never trigger a welcome.
-      const welcome = input.consentVersion === 'welcome-and-early-access-2026-10-23';
+      // Both approved welcome-consent wordings qualify; older/unknown consent does not.
+      const welcome = input.consentVersion === 'welcome-and-early-access-2026-10-23'
+        || input.consentVersion === 'welcome-and-early-access-2026-11-18';
       const rpc = welcome ? 'join_blyth_waitlist_v2' : 'join_blyth_waitlist';
       const response = await fetchImpl(`${url.replace(/\/$/, '')}/rest/v1/rpc/${rpc}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json', apikey: key,

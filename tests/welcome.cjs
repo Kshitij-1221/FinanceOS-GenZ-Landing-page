@@ -62,17 +62,19 @@ test('A lost DB acknowledgement after sending cannot claim completion', async ()
     throw new Error('DB unavailable');
   }), 'queued');
 });
-test('Only updated consent triggers welcome; delivery failure still returns saved signup success', async () => {
+test('Both approved consent labels trigger welcome; legacy/unknown labels do not; delivery failure still returns success', async () => {
   let sends = 0; const rpcs = [];
   const handler = createWaitlistHandler({ config: () => ({ ...config, hashSecret: 'x'.repeat(64) }),
     fetchImpl: async url => { rpcs.push(url); return Response.json('accepted'); },
     sendWelcome: async () => { sends++; throw new Error('PRIVATE provider failure'); },
   });
-  for (const consentVersion of [undefined, 'welcome-and-early-access-2026-10-23']) {
+  for (const consentVersion of [undefined, 'unknown-consent', 'welcome-and-early-access-2026-10-23', 'welcome-and-early-access-2026-11-18']) {
     const response = await handler(new Request('https://www.getblyth.com/api/waitlist', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email, consent: true, consentVersion }) }));
     assert.equal(response.status, 200); assert.deepEqual(await response.json(), { ok: true });
   }
-  assert.equal(sends, 1); assert.match(rpcs[0], /join_blyth_waitlist$/); assert.match(rpcs[1], /join_blyth_waitlist_v2$/);
+  assert.equal(sends, 2);
+  for (const rpc of rpcs.slice(0, 2)) assert.match(rpc, /join_blyth_waitlist$/);
+  for (const rpc of rpcs.slice(2)) assert.match(rpc, /join_blyth_waitlist_v2$/);
 });
 test('Template uses the shared logo, plain text alternative and no OTP or tracking identifiers', () => {
   assert.match(payload.html, /blyth-lockup-dark-v1.png/);

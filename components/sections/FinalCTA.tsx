@@ -61,21 +61,21 @@ export function FinalCTA() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitted || submitting) return;
-    if (!email.trim() || !consent) { setErrorMsg('Enter your email and agree to receive the welcome and early-access emails.'); return; }
+    if (!email.trim() || !consent) { setStatus('error'); setErrorMsg('Add your email and tick the box to join.'); return; }
     setStatus('submitting'); setErrorMsg(null);
     try {
       const response = await fetch('/api/waitlist', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), consent, website, consentVersion: 'welcome-and-early-access-2026-10-23' }),
+        body: JSON.stringify({ email: email.trim(), consent, website, consentVersion: 'welcome-and-early-access-2026-11-18' }),
         signal: AbortSignal.timeout(35000),
       });
       const data = await response.json();
       if (!response.ok || data.ok !== true) {
-        setStatus('error'); setErrorMsg(data.error || 'We could not confirm your signup. Please try again.'); return;
+        setStatus('error'); setErrorMsg('Something went wrong. Please try again.'); return;
       }
       fireSuccess();
     } catch {
-      setStatus('error'); setErrorMsg('We could not confirm your signup. Please try again.');
+      setStatus('error'); setErrorMsg('Something went wrong. Please try again.');
     }
   };
 
@@ -101,7 +101,7 @@ export function FinalCTA() {
         style={{ maxWidth: 760 }}
       >
         <Reveal>
-          <Overline>Be first</Overline>
+          <Overline>Early access</Overline>
         </Reveal>
         <Reveal delay={80}>
           <h2
@@ -129,14 +129,14 @@ export function FinalCTA() {
               textWrap: 'pretty',
             }}
           >
-            Join the early access list &mdash; be first to feel calm about money.
-            A welcome email now, and a heads-up when we launch. No spam.
+            Join the list. You'll get a welcome email now and one more when Blyth is ready for you. Nothing else.
           </p>
         </Reveal>
 
         <Reveal delay={280}>
           <form
             id="waitlist-form" onSubmit={onSubmit}
+            onInvalid={() => { setStatus('error'); setErrorMsg('Add your email and tick the box to join.'); }}
             className="cta-form relative mx-auto mt-10 flex flex-col justify-center gap-2.5"
             style={{ maxWidth: 520 }}
             aria-busy={submitting}
@@ -160,7 +160,7 @@ export function FinalCTA() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@gmail.com"
+                placeholder="you@email.com"
                 disabled={submitted || submitting}
                 aria-label="Email address"
                 maxLength={254}
@@ -188,7 +188,7 @@ export function FinalCTA() {
                 }}
               >
                 <span className="relative">
-                  {submitted ? "You're in!" : submitting ? 'Sending…' : 'Get early access'}
+                  {submitted ? "You're in. 🎉" : submitting ? 'Joining…' : 'Get early access'}
                 </span>
                 {!submitted && !submitting && (
                   <span className="relative" style={{ fontSize: 15 }}>
@@ -205,7 +205,7 @@ export function FinalCTA() {
 
             <label className="flex items-start gap-2 text-left text-sm text-fg-muted">
               <input type="checkbox" required checked={consent} onChange={e => setConsent(e.target.checked)} disabled={submitted || submitting} className="mt-1" />
-              <span>Send me a welcome email and let me know when Blyth early access opens. I have read the <a className="text-gold-soft underline" href="/privacy">privacy notice</a>.</span>
+              <span>Email me a welcome note and tell me when early access opens. I've read the <a className="text-gold-soft underline" href="/privacy">privacy notice</a>.</span>
             </label>
             <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px' }}>
               <label>Website<input name="website" value={website} onChange={e => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" /></label>
@@ -261,7 +261,7 @@ export function FinalCTA() {
 
           {/* Error message — replaces the trust line while in error state.
               Polite aria-live so screen readers announce without stealing focus. */}
-          {submitted && <p role="status" className="mt-4 text-sm text-fg-muted">You're on the list. We'll email when early access opens.</p>}
+          {submitted && <p role="status" className="mt-4 text-sm text-fg-muted">Check your inbox for a welcome email. We'll write again when early access opens.</p>}
           {status === 'error' && (
             <div
               role="status"
@@ -274,7 +274,7 @@ export function FinalCTA() {
                 fontSize: 13,
               }}
             >
-              {errorMsg ?? "Couldn't submit. Try again?"}
+              {errorMsg ?? "Something went wrong. Please try again."}
             </div>
           )}
         </Reveal>
@@ -289,10 +289,8 @@ export function FinalCTA() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--success)' }}
               />
-              Be part of the first group
+              Be one of the first to try Blyth.
             </span>
-            <span className="opacity-40">·</span>
-            <span>Made for India · Built for focus</span>
           </div>
         </Reveal>
       </div>

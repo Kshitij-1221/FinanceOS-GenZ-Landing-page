@@ -32,9 +32,9 @@ import { Overline } from '../Overline';
 import { Reveal } from '../Reveal';
 
 const STEPS = [
-  { n: 1, title: 'Set your income + goal',     body: 'Sixty seconds. No bank login.' },
-  { n: 2, title: 'Speak, type or tap', body: 'Review your entries, then save.' },
-  { n: 3, title: 'Watch your jar fill',        body: 'Stay in budget. Streaks build. Calm follows.' },
+  { n: 1, title: 'Set up your month',     body: 'Salary, bills, SIPs, budgets. About a minute.' },
+  { n: 2, title: 'Log as you go', body: 'Tap it, type it, or just say it. Check, then save.' },
+  { n: 3, title: 'Watch your jar',        body: "Stay within budget, keep your streak, see what you'll save." },
 ] as const;
 
 const DASH_LEN = 1200;

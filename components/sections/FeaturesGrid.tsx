@@ -41,39 +41,39 @@ type Item = {
 
 const FEATURES: Item[] = [
   {
-    title: 'Your savings forecast',
-    kicker: 'Saving engine',
-    body: 'See projected month-end savings against your target as you record income, plans and spending.',
+    title: "Know your month-end by mid-month",
+    kicker: "Forecast",
+    body: "See what you're on track to save by the 30th, updated with every entry.",
     visual: <FeatureJarPulse />,
   },
   {
-    title: 'Smart budgets',
-    kicker: 'Envelope model',
-    body: 'Each category gets a ceiling. Overspending drains the jar — instantly visible.',
+    title: "Budgets that keep you honest",
+    kicker: "Budgets",
+    body: "Give each category a limit. Stay inside it and nothing changes. Go over, and your jar shows it instantly.",
     visual: <FeatureEnvelopes />,
   },
   {
-    title: 'Goals',
-    kicker: 'Visual progress',
-    body: 'Goa trip · new laptop · emergency fund. Set a target and track the money you assign to each goal.',
+    title: "Goals you can watch fill",
+    kicker: "Goals",
+    body: "Goa trip, new laptop, emergency fund. Set a target, add money when you can, and watch it fill.",
     visual: <FeatureGoals />,
   },
   {
-    title: 'Portfolio',
-    kicker: 'All in one place',
-    body: 'Track your recorded SIPs, funds, gold and other holdings in one place.',
+    title: "SIPs, FDs and gold, in one list",
+    kicker: "Investments",
+    body: "Keep every investment in one place. Your monthly SIPs come off the top, so your budget is always real.",
     visual: <FeaturePortfolio />,
   },
   {
-    title: 'Speak or type an entry',
-    kicker: 'Optional AI',
-    body: 'Describe expenses, bonuses, investments and goals. Check the proposed entries, then save.',
+    title: "Just say it",
+    kicker: "Optional AI",
+    body: "Type or say \"chai ₹50, cab ₹180\". Blyth turns it into entries. You check, then save.",
     visual: <FeatureAI />,
   },
   {
-    title: 'Local-first records',
-    kicker: 'On-device',
-    body: 'Manual tracking is saved on your device. Cloud backup, where available, is a separate manual choice. AI processes the requests and context you choose to send.',
+    title: "Stays on your phone",
+    kicker: "Private",
+    body: "Your records live on your device. Back up only when you choose.",
     visual: <FeaturePrivacy />,
   },
 ];
@@ -83,7 +83,7 @@ export function FeaturesGrid() {
     <section id="features" className="relative" style={{ padding: '20px 0 80px' }}>
       <div className="container-prose">
         <Reveal>
-          <Overline>Everything you need</Overline>
+          <Overline>What's inside</Overline>
         </Reveal>
         <Reveal delay={100}>
           <h2
@@ -97,9 +97,9 @@ export function FeaturesGrid() {
               textWrap: 'balance',
             }}
           >
-            Everything you need to feel
+            Everything your month needs.
             <br />
-            <span className="gold-text">calm about money.</span>
+            <span className="gold-text">Nothing it doesn't.</span>
           </h2>
         </Reveal>
 
@@ -269,8 +269,8 @@ function FeatureEnvelopes() {
 function FeatureGoals() {
   const goals = [
     { pct: 84, label: 'Goa' },
-    { pct: 41, label: 'Mac' },
-    { pct: 22, label: 'Fund' },
+    { pct: 41, label: 'Laptop' },
+    { pct: 22, label: 'Safety' },
   ];
   return (
     <div className="flex items-end gap-3.5">
@@ -323,7 +323,7 @@ function FeaturePortfolio() {
           textTransform: 'uppercase',
         }}
       >
-        <span>Recorded holdings</span>
+        <span>This month's SIP</span>
         <span
           className="font-mono"
           style={{
@@ -332,7 +332,7 @@ function FeaturePortfolio() {
             textTransform: 'none',
           }}
         >
-          ↑ 12.4%
+          ₹5,000
         </span>
       </div>
       <svg width="100%" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
@@ -388,11 +388,11 @@ function FeatureAI() {
             textTransform: 'uppercase',
           }}
         >
-          Draft preview
+          Ready to review
         </span>
       </div>
       <div className="text-fg" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-        &ldquo;Lunch ₹250, cab ₹180. Ready for you to review.&rdquo;
+        &quot;Chai ₹50 · Cab ₹180&quot; → 2 entries to review
       </div>
     </div>
   );
@@ -443,7 +443,7 @@ function FeaturePrivacy() {
           fontWeight: 700,
         }}
       >
-        Lives on your phone
+        On your phone
       </div>
     </div>
   );

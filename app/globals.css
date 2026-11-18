@@ -266,7 +266,7 @@ html {
 }
 @media (max-width: 980px) {
   .solution-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 36px !important;
     text-align: left;
   }

@@ -8,7 +8,7 @@
  *   on the right. Collapses to a single column on ≤ 980px (jar above copy).
  *
  * Content
- *   - Overline: "Your competitive weapon"
+ *   - Overline: "Privacy"
  *   - Headline: 3-line "Your money / never / leaves your phone." with the
  *     last line in gold gradient
  *   - Sub-paragraph
@@ -28,9 +28,9 @@ import { Reveal } from '../Reveal';
 type IconName = 'lock' | 'eye' | 'shield';
 
 const CHECKLIST: Array<{ icon: IconName; label: string }> = [
-  { icon: 'lock',   label: 'Finance records stored on your device' },
-  { icon: 'eye',    label: 'No bank login required' },
-  { icon: 'shield', label: 'Optional AI, with review before saving' },
+  { icon: 'lock',   label: 'Your records stay on your phone' },
+  { icon: 'eye',    label: 'No bank login needed' },
+  { icon: 'shield', label: 'AI only when you ask, and you approve every entry' },
 ];
 
 export function Privacy() {
@@ -57,7 +57,7 @@ export function Privacy() {
         {/* Copy + checklist column */}
         <div>
           <Reveal>
-            <Overline>Your competitive weapon</Overline>
+            <Overline>Privacy</Overline>
           </Reveal>
 
           <Reveal delay={80}>
@@ -88,9 +88,7 @@ export function Privacy() {
                 textWrap: 'pretty',
               }}
             >
-              Your finance records are saved on this device. Cloud backup, where available, only uploads when you choose Back up now. When you choose AI, your
-              message and relevant financial details go to OpenAI. Voice input
-              also sends your recording for transcription. Manual tracking works without AI.
+              Your records live on your phone. Backup is optional; nothing uploads until you tap <em>Back up now</em>. AI is optional too: when you use it, your message (and voice recording) goes to OpenAI to create a draft you review. Rather skip AI? Everything works without it.
             </p>
           </Reveal>
 
@@ -128,6 +126,7 @@ export function Privacy() {
                 </li>
               ))}
             </ul>
+            <a className="mt-5 inline-block text-sm text-gold-soft underline" href="/privacy">Read the full privacy notice →</a>
           </Reveal>
         </div>
       </div>

@@ -65,7 +65,7 @@ export function Calculator() {
 
       <div className="container-prose relative z-[1]">
         <Reveal>
-          <Overline>Play with it</Overline>
+          <Overline>Try it</Overline>
         </Reveal>
         <Reveal delay={80}>
           <h2
@@ -79,9 +79,9 @@ export function Calculator() {
               textWrap: 'balance',
             }}
           >
-            See your jar
+            How fast could
             <br />
-            <span className="gold-text">fill, live.</span>
+            <span className="gold-text">your jar fill?</span>
           </h2>
         </Reveal>
 
@@ -96,7 +96,7 @@ export function Calculator() {
             {/* LEFT — controls + result card */}
             <div>
               <CalcSlider
-                label="Monthly income"
+                label="You earn (per month)"
                 value={income}
                 min={5000}
                 max={500000}
@@ -107,7 +107,7 @@ export function Calculator() {
               <div style={{ height: 28 }} />
 
               <CalcSlider
-                label="Want to save"
+                label="You want to save (per month)"
                 value={safeTarget}
                 min={500}
                 max={income}
@@ -134,7 +134,7 @@ export function Calculator() {
                     textTransform: 'uppercase',
                   }}
                 >
-                  At this rate
+                  In 12 months
                 </div>
                 <div
                   className="font-display font-mono mt-2"
@@ -157,15 +157,16 @@ export function Calculator() {
                   className="mt-1.5 text-fg-muted"
                   style={{ fontSize: 13 }}
                 >
-                  saved this year ·{' '}
+                  saved ·{' '}
                   <span
                     className="font-mono text-fg-strong"
                     style={{ fontWeight: 600 }}
                   >
                     {pct}%
                   </span>{' '}
-                  of income
+                  of your income
                 </div>
+                <p className="mt-3 text-xs text-fg-muted">A simple projection: monthly saving × 12.</p>
               </div>
             </div>
 

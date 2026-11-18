@@ -146,7 +146,7 @@ export function HeroV2() {
       {/* Centre content channel — the whole hero now */}
       <div className="container-prose relative z-[4] text-center">
         <Reveal delay={0}>
-          <Overline>Your money, made clear</Overline>
+          <Overline>Money, without the maths</Overline>
         </Reveal>
         <Reveal delay={120}>
           <h1
@@ -177,8 +177,7 @@ export function HeroV2() {
               textWrap: 'pretty',
             }}
           >
-            The calm finance app for India. Set a goal, watch your jar fill,
-            and finally feel in control of your money.
+            Blyth turns your salary, bills, SIPs and spending into one simple jar, so you always know what's left to save.
           </p>
         </Reveal>
         <Reveal delay={360}>
@@ -210,7 +209,7 @@ export function HeroV2() {
                 textDecoration: 'none',
               }}
             >
-              See how it works <span className="text-[15px]">→</span>
+              See how it works <span className="text-[15px]">↓</span>
             </a>
           </div>
         </Reveal>
@@ -222,7 +221,7 @@ export function HeroV2() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--success)' }}
               />
-              Local-first tracking
+              Stays on your phone
             </span>
             <span className="inline-flex items-center gap-1.5">
               <span
@@ -230,7 +229,7 @@ export function HeroV2() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--gold-soft)' }}
               />
-              No bank login
+              Free to track
             </span>
             <span className="inline-flex items-center gap-1.5">
               <span
@@ -238,7 +237,7 @@ export function HeroV2() {
                 className="inline-block h-1.5 w-1.5 rounded-full"
                 style={{ background: 'var(--gold-soft)' }}
               />
-              Early access
+              AI optional
             </span>
           </div>
         </Reveal>

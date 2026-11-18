@@ -44,7 +44,9 @@ import { Reveal } from '../Reveal';
 const PHONES = [
   {
     src:    '/img/screen-promise.png',
-    label:  'Promise',
+    label:  'Home',
+    caption: 'Your month, in one jar',
+    alt: "Blyth home screen with the Money Jar showing what's left this month",
     rotate: -7,
     z:      1,
     base:   20,   // base translateY before parallax
@@ -53,7 +55,9 @@ const PHONES = [
   },
   {
     src:    '/img/screen-dashboard.png',
-    label:  'Dashboard',
+    label:  'Log expense',
+    caption: 'Logged in two taps',
+    alt: 'Logging a ₹180 expense in Blyth',
     rotate: 0,
     z:      3,
     base:   -20,
@@ -62,7 +66,9 @@ const PHONES = [
   },
   {
     src:    '/img/screen-setup.png',
-    label:  'Setup',
+    label:  'Goals',
+    caption: 'Every goal, filling up',
+    alt: 'Blyth goals screen with a Goa trip 25% funded',
     rotate: 7,
     z:      1,
     base:   20,
@@ -140,9 +146,9 @@ export function PhoneShowcase() {
               textWrap: 'balance',
             }}
           >
-            Beautiful. Calm.
+            Made to be glanced at,
             <br />
-            <span className="gold-text">Yours.</span>
+            <span className="gold-text">not studied.</span>
           </h2>
         </Reveal>
 
@@ -172,6 +178,8 @@ export function PhoneShowcase() {
               <PhoneFrame
                 src={p.src}
                 label={p.label}
+                caption={p.caption}
+                alt={p.alt}
                 rotate={p.rotate}
                 translateY={p.base + t * p.speed}
                 z={p.z}
@@ -190,6 +198,8 @@ interface PhoneFrameProps {
   src: string;
   /** Friendly name used in the placeholder if the image is missing. */
   label: string;
+  caption: string;
+  alt: string;
   rotate?: number;
   translateY?: number;
   z?: number;
@@ -199,6 +209,8 @@ interface PhoneFrameProps {
 function PhoneFrame({
   src,
   label,
+  caption,
+  alt,
   rotate = 0,
   translateY = 0,
   z = 1,
@@ -230,12 +242,14 @@ function PhoneFrame({
         style={{ width: innerW, height: innerH, borderRadius: 36 }}
       >
         {imgError ? (
-          <PhonePlaceholder label={label} />
+          process.env.NODE_ENV !== 'production' ? <PhonePlaceholder label={label} /> : (
+            <div className="flex h-full items-center justify-center text-fg-muted">{label}</div>
+          )
         ) : (
           /* eslint-disable-next-line @next/next/no-img-element -- intentional: raw <img> for object-fit cover + onError fallback */
           <img
             src={src}
-            alt={`Blyth — ${label} screen`}
+            alt={alt}
             loading="lazy"
             onError={() => setImgError(true)}
             className="h-full w-full"
@@ -244,7 +258,7 @@ function PhoneFrame({
         )}
 
         {/* Keep the brand label current over the legacy dashboard capture. */}
-        {!imgError && label === 'Dashboard' && (
+        {!imgError && src === '/img/screen-dashboard.png' && (
           <div
             aria-hidden="true"
             className="absolute font-display font-extrabold text-white"
@@ -276,6 +290,10 @@ function PhoneFrame({
             background: '#050505',
           }}
         />
+      </div>
+      <div className="absolute inset-x-0 top-full pt-4 text-center">
+        <p className="text-sm font-semibold text-fg-strong">{label}</p>
+        <p className="mt-1 text-xs text-fg-muted">{caption}</p>
       </div>
     </div>
   );

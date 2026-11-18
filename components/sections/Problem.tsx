@@ -24,8 +24,8 @@ import { Reveal } from '../Reveal';
 
 const LINES = [
   'Salary comes in… vanishes by the 20th.',
-  'Three apps open, still no clarity.',
-  'Saving feels like a chore.',
+  "Five apps, two spreadsheets, and still no idea what you can spend.",
+  "\"I'll start saving next month.\" Every month.",
 ] as const;
 
 export function Problem() {
@@ -81,6 +81,7 @@ export function Problem() {
             </Reveal>
           ))}
         </div>
+        <p className="mt-7 text-lg text-fg-muted">It's not you. Nothing shows you the whole picture.</p>
       </div>
     </section>
   );

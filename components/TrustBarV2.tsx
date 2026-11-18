@@ -12,10 +12,10 @@
 import { Reveal } from './Reveal';
 
 const STATS = [
-  { value: 'Local', label: 'Records on your device', mono: false,  accent: true  },
-  { value: '0',     label: 'Bank logins required', mono: true,  accent: false },
-  { value: '0',     label: 'Ads in the app',            mono: true,  accent: false },
-  { value: 'India', label: 'Made for',             mono: false, accent: true  },
+  { value: '₹0', label: 'To track by hand', mono: false,  accent: true  },
+  { value: '0',     label: 'Bank logins needed', mono: true,  accent: false },
+  { value: '0',     label: 'Ads',            mono: true,  accent: false },
+  { value: '~1 min', label: 'To set up your month',             mono: false, accent: true  },
 ] as const;
 
 export function TrustBarV2() {
@@ -30,7 +30,7 @@ export function TrustBarV2() {
                   className="flex flex-col gap-1.5"
                   style={{
                     borderLeft: i === 0 ? '0' : '1px solid rgba(255,255,255,0.06)',
-                    paddingLeft: i === 0 ? 0 : 22,
+                    paddingLeft: i === 0 ? 0 : 'clamp(12px, 2vw, 22px)',
                   }}
                 >
                   <div

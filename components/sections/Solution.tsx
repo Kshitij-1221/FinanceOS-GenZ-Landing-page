@@ -102,7 +102,7 @@ export function Solution() {
         {/* Copy column */}
         <div className="solution-copy">
           <Reveal>
-            <Overline>The signature</Overline>
+            <Overline>The money jar</Overline>
           </Reveal>
 
           <Reveal delay={80}>
@@ -116,9 +116,9 @@ export function Solution() {
                 textWrap: 'balance',
               }}
             >
-              Meet the
+              One jar.
               <br />
-              <span className="gold-text">Money Jar.</span>
+              <span className="gold-text">The whole picture.</span>
             </h2>
           </Reveal>
 
@@ -132,8 +132,7 @@ export function Solution() {
                 textWrap: 'pretty',
               }}
             >
-              Every rupee you keep drops in. Set a goal, watch it fill, and feel
-              the calm of compounding self-control.
+              Tell Blyth your salary, bills, SIPs and budgets once. The jar shows what's really left this month. Spend within budget and it holds steady. Overspend, and you'll watch it drop.
             </p>
           </Reveal>
 
@@ -147,7 +146,7 @@ export function Solution() {
                 fontWeight: 500,
               }}
             >
-              The only rule? Don&apos;t break it.
+              No formulas. No guessing. Just look at the jar.
             </p>
           </Reveal>
 
@@ -189,7 +188,7 @@ export function Solution() {
                     textTransform: 'uppercase',
                   }}
                 >
-                  Live as you scroll
+                  Scroll to fill it
                 </span>
                 <span
                   className="mt-0.5 text-fg-strong"

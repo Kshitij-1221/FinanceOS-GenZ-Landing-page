@@ -65,7 +65,7 @@ test('A lost DB acknowledgement after sending cannot claim completion', async ()
 test('Both approved consent labels trigger welcome; legacy/unknown labels do not; delivery failure still returns success', async () => {
   let sends = 0; const rpcs = [];
   const handler = createWaitlistHandler({ config: () => ({ ...config, hashSecret: 'x'.repeat(64) }),
-    fetchImpl: async url => { rpcs.push(url); return Response.json('accepted'); },
+    fetchImpl: async (url, options) => { rpcs.push({ url, body: JSON.parse(options.body) }); return Response.json('accepted'); },
     sendWelcome: async () => { sends++; throw new Error('PRIVATE provider failure'); },
   });
   for (const consentVersion of [undefined, 'unknown-consent', 'welcome-and-early-access-2026-10-23', 'welcome-and-early-access-2026-11-18']) {
@@ -73,8 +73,13 @@ test('Both approved consent labels trigger welcome; legacy/unknown labels do not
     assert.equal(response.status, 200); assert.deepEqual(await response.json(), { ok: true });
   }
   assert.equal(sends, 2);
-  for (const rpc of rpcs.slice(0, 2)) assert.match(rpc, /join_blyth_waitlist$/);
-  for (const rpc of rpcs.slice(2)) assert.match(rpc, /join_blyth_waitlist_v2$/);
+  for (const rpc of rpcs.slice(0, 2)) {
+    assert.match(rpc.url, /join_blyth_waitlist$/);
+    assert.equal(Object.hasOwn(rpc.body, 'p_consent_version'), false);
+  }
+  for (const rpc of rpcs.slice(2)) assert.match(rpc.url, /join_blyth_waitlist_v3$/);
+  assert.equal(rpcs[2].body.p_consent_version, 'welcome-and-early-access-2026-10-23');
+  assert.equal(rpcs[3].body.p_consent_version, 'welcome-and-early-access-2026-11-18');
 });
 test('Template uses the shared logo, plain text alternative and no OTP or tracking identifiers', () => {
   assert.match(payload.html, /blyth-lockup-dark-v1.png/);
@@ -108,8 +113,12 @@ test('Postgres queue: consent, duplicates, leases, durable retries, expiry, perm
     await db.query('select join_blyth_waitlist($1,$2)', ['old@example.com', 'a'.repeat(64)]);
     await db.exec(fs.readFileSync('supabase/002_welcome_email.sql', 'utf8'));
     const rpc = async (name, args) => (await db.query(`select ${name}(${args.map((_, i) => '$' + (i + 1)).join(',')}) as value`, args)).rows[0].value;
+    const v2Before = (await db.query("select pg_get_functiondef('public.join_blyth_waitlist_v2(text,text)'::regprocedure) def")).rows[0].def;
+    await db.exec(fs.readFileSync('supabase/003_consent_version.sql', 'utf8'));
+    assert.equal((await db.query("select pg_get_functiondef('public.join_blyth_waitlist_v2(text,text)'::regprocedure) def")).rows[0].def, v2Before);
     assert.equal((await db.query('select count(*)::int n from waitlist_welcome_outbox')).rows[0].n, 0);
     for (let i = 0; i < 2; i++) assert.equal(await rpc('join_blyth_waitlist_v2', [email, 'b'.repeat(64)]), 'accepted');
+    assert.equal((await db.query('select consent_version from waitlist_signups where email=$1', [email])).rows[0].consent_version, 'welcome-and-early-access-2026-10-23');
     assert.equal((await db.query('select count(*)::int n from waitlist_welcome_outbox')).rows[0].n, 1);
     const claimed = await rpc('claim_blyth_welcome', [email, JSON.stringify(payload)]);
     assert.ok(claimed.token); assert.equal(await rpc('claim_blyth_welcome', [email, '{}']), null);
@@ -129,5 +138,56 @@ test('Postgres queue: consent, duplicates, leases, durable retries, expiry, perm
     }
     await db.query('delete from waitlist_signups where email=$1', [email]);
     assert.equal((await db.query('select count(*)::int n from waitlist_welcome_outbox')).rows[0].n, 0);
+  } finally { await db.close(); }
+});
+
+test('Postgres v3 stores exact consent, rejects unknown labels without writes, and retains rate limits and permissions', async () => {
+  const db = new PGlite();
+  const october = 'welcome-and-early-access-2026-10-23';
+  const november = 'welcome-and-early-access-2026-11-18';
+  const rpc = async (address, hash, version) => (await db.query(
+    'select public.join_blyth_waitlist_v3($1,$2,$3) value', [address, hash, version])).rows[0].value;
+  const count = async table => (await db.query(`select count(*)::int n from ${table}`)).rows[0].n;
+  try {
+    await db.exec('create role anon; create role authenticated; create role service_role bypassrls;');
+    for (const file of ['waitlist.sql', '002_welcome_email.sql', '003_consent_version.sql']) {
+      await db.exec(fs.readFileSync(`supabase/${file}`, 'utf8'));
+    }
+    const security = (await db.query("select prosecdef, proconfig from pg_proc where oid='public.join_blyth_waitlist_v3(text,text,text)'::regprocedure")).rows[0];
+    assert.equal(security.prosecdef, true);
+    assert.deepEqual(security.proconfig, ['search_path=""']);
+    for (const role of ['anon', 'authenticated', 'service_role']) {
+      assert.equal((await db.query("select has_function_privilege($1,'public.join_blyth_waitlist_v3(text,text,text)','execute') ok", [role])).rows[0].ok, role === 'service_role');
+    }
+    await db.exec('set role service_role');
+    for (const [index, version] of [october, november].entries()) {
+      const address = `version-${index}@example.com`;
+      assert.equal(await rpc(` ${address.toUpperCase()} `, 'c'.repeat(64), version), 'accepted');
+      assert.equal((await db.query('select consent_version from waitlist_signups where email=$1', [address])).rows[0].consent_version, version);
+    }
+    assert.equal(await count('waitlist_welcome_outbox'), 2);
+    // Rejoining updates consent but cannot create another welcome for this address.
+    assert.equal(await rpc('version-0@example.com', 'c'.repeat(64), november), 'accepted');
+    assert.equal((await db.query("select consent_version from waitlist_signups where email='version-0@example.com'")).rows[0].consent_version, november);
+    assert.equal(await count('waitlist_welcome_outbox'), 2);
+    for (const version of [null, '', 'unknown', november + ' ']) {
+      assert.equal(await rpc('invalid@example.com', 'd'.repeat(64), version), 'invalid');
+      assert.equal(await rpc('version-0@example.com', 'd'.repeat(64), version), 'invalid');
+    }
+    assert.equal(await count('waitlist_signups'), 2);
+    assert.equal(await count('waitlist_welcome_outbox'), 2);
+    assert.equal((await db.query("select consent_version from waitlist_signups where email='version-0@example.com'")).rows[0].consent_version, november);
+    assert.equal((await db.query('select count(*)::int n from waitlist_request_limits where client_hash=$1', ['d'.repeat(64)])).rows[0].n, 0);
+    assert.equal(await rpc('not-an-email', 'd'.repeat(64), november), 'invalid');
+    assert.equal(await rpc('invalid-hash@example.com', 'bad-hash', november), 'invalid');
+    for (let i = 0; i < 5; i++) assert.equal(await rpc(`limited-${i}@example.com`, 'e'.repeat(64), november), 'accepted');
+    assert.equal(await rpc('blocked@example.com', 'e'.repeat(64), november), 'limited');
+    assert.equal(await count('waitlist_signups'), 7);
+    assert.equal(await count('waitlist_welcome_outbox'), 7);
+    await db.exec('reset role');
+    // Reapplying the additive migration neither changes consent nor queues mail.
+    await db.exec(fs.readFileSync('supabase/003_consent_version.sql', 'utf8'));
+    assert.equal(await count('waitlist_welcome_outbox'), 7);
+    assert.equal((await db.query("select consent_version from waitlist_signups where email='version-0@example.com'")).rows[0].consent_version, november);
   } finally { await db.close(); }
 });

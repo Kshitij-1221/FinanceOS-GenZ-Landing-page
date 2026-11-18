@@ -36,11 +36,12 @@ export function createWaitlistHandler({ config, fetchImpl = fetch, sendWelcome }
       // Both approved welcome-consent wordings qualify; older/unknown consent does not.
       const welcome = input.consentVersion === 'welcome-and-early-access-2026-10-23'
         || input.consentVersion === 'welcome-and-early-access-2026-11-18';
-      const rpc = welcome ? 'join_blyth_waitlist_v2' : 'join_blyth_waitlist';
+      const rpc = welcome ? 'join_blyth_waitlist_v3' : 'join_blyth_waitlist';
       const response = await fetchImpl(`${url.replace(/\/$/, '')}/rest/v1/rpc/${rpc}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json', apikey: key,
           ...(key.startsWith('sb_secret_') ? {} : { Authorization: `Bearer ${key}` }) },
-        body: JSON.stringify({ p_email: email, p_client_hash: hash }), signal: AbortSignal.timeout(10000), cache: 'no-store',
+        body: JSON.stringify({ p_email: email, p_client_hash: hash,
+          ...(welcome ? { p_consent_version: input.consentVersion } : {}) }), signal: AbortSignal.timeout(10000), cache: 'no-store',
       });
       if (!response.ok) return reply(503, { error: 'We could not save your email. Please try again shortly.' });
       const result = await response.json();

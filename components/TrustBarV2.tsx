@@ -15,7 +15,7 @@ const STATS = [
   { value: '₹0', label: 'To track by hand', mono: false,  accent: true  },
   { value: '0',     label: 'Bank logins needed', mono: true,  accent: false },
   { value: '0',     label: 'Ads',            mono: true,  accent: false },
-  { value: '~1 min', label: 'To set up your month',             mono: false, accent: true  },
+  { value: '~1 min', label: 'To get started',             mono: false, accent: true  },
 ] as const;
 
 export function TrustBarV2() {

@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * FAQ — 10-item accordion. First question default-open.
+ * FAQ — 11-item accordion. First question default-open.
  *
  * Ported from landing-v2/sections-bottom.jsx > FAQ + FAQItem.
  *
@@ -36,6 +36,7 @@ import { Reveal } from '../Reveal';
 const ITEMS = [
   { q: "Does Blyth connect to my bank?", a: "No. You add entries yourself, by tapping, typing or saying them, and review before saving. No bank login needed." },
   { q: "Is it free?", a: "Yes. Tracking by hand is free. AI entry comes with a free allowance. A paid AI plan isn't available yet; if one comes, you'll see the price before anything is charged." },
+  { q: "Do I have to enter everything at once?", a: "No. Start with your salary and a target, and add the rest over time. The jar updates as you go." },
   { q: "Where is my data stored?", a: "On your phone. If you use backup and tap Back up now, a copy is stored with our database provider, Supabase. If you use AI, your message (and voice recording) goes to OpenAI to create a draft. Joining this list stores only your email. Full details in the privacy notice." },
   { q: "What if I lose my phone?", a: "If you've backed up, sign in on your new phone and restore. Without a backup, your records stay only on the old device, so back up now and then." },
   { q: "Do I need an account?", a: "Not for tracking by hand. An email sign-in is only needed for AI entry and backup." },

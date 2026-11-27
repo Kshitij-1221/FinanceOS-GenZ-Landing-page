@@ -1,6 +1,6 @@
 # Blyth landing page: copy remake
 
-Complete rewrite of every string on getblyth.com, its subpages, metadata, form states and image alt text. Draft v2, 18 Nov 2026 (Claude). **Nothing here is live.** Part B wording approved by the owner and implemented locally 19 November 2026; no landing push or deployment.
+Complete rewrite of every string on getblyth.com, its subpages, metadata, form states and image alt text. Draft v2, 18 Nov 2026 (Claude). Part B wording was approved by the owner and published on 19 November 2026. The owner’s 21 November getting-started clarification below is implemented on 27 November for preview review only; production promotion remains with the owner.
 
 How to review: read **Part A** once (the strategy). Then go through Part B section by section. Each line shows **Now → New**; where there's a real choice there's an **Alt**. Mark each section ✅, or write changes beside it.
 
@@ -49,6 +49,7 @@ Calm, warm, plain, a little playful. Short sentences. A smart friend who's good 
 - AI: optional, limited free allowance, every draft reviewed before saving.
 - Backup: optional and manual (*Back up now*), not automatic sync, not end-to-end encrypted.
 - No launch dates. Calculator results are labelled as a simple projection.
+- Owner decision, 21 November: “1 minute” describes getting started with salary and a savings target, never entering the whole month. Bills, SIPs and budgets can be added later or described to AI.
 
 ## A7. Repetition budget
 | Phrase | Now | Target |
@@ -85,7 +86,7 @@ Four facts, each said once on the page.
 | Local · RECORDS ON YOUR DEVICE | **₹0 · TO TRACK BY HAND** |
 | 0 · BANK LOGINS REQUIRED | **0 · BANK LOGINS NEEDED** |
 | 0 · ADS IN THE APP | **0 · ADS** |
-| India · MADE FOR | **~1 min · TO SET UP YOUR MONTH** |
+| India · MADE FOR | **~1 min · TO GET STARTED** |
 
 ## 4. Problem ✅ implemented
 | Element | Now | New |
@@ -199,7 +200,7 @@ Four facts, each said once on the page.
 | --- | --- | --- |
 | Overline | HOW IT WORKS | Keep |
 | Headline | Three steps to / a calmer month. | **Keep** |
-| Step 1 | Set your income + goal / Sixty seconds. No bank login. | **Set up your month** / **Salary, bills, SIPs, budgets. About a minute.** |
+| Step 1 | Set your income + goal / Sixty seconds. No bank login. | **Start in a minute** / **Add your salary and a savings target. Bring in bills, SIPs and budgets whenever you're ready, or just describe them to the AI.** |
 | Step 2 | Speak, type or tap / Review your entries, then save. | **Log as you go** / **Tap it, type it, or just say it. Check, then save.** |
 | Step 3 | Watch your jar fill / Stay in budget. Streaks build. Calm follows. | **Watch your jar** / **Stay within budget, keep your streak, see what you'll save.** |
 
@@ -215,6 +216,8 @@ Order: most-asked first. All answers checked against current app behaviour.
    No. You add entries yourself, by tapping, typing or saying them, and review before saving. No bank login needed.
 2. **Is it free?**
    Yes. Tracking by hand is free. AI entry comes with a free allowance. A paid AI plan isn't available yet; if one comes, you'll see the price before anything is charged.
+2b. **Do I have to enter everything at once?**
+   No. Start with your salary and a target, and add the rest over time. The jar updates as you go.
 3. **Where is my data stored?**
    On your phone. If you use backup and tap *Back up now*, a copy is stored with our database provider, Supabase. If you use AI, your message (and voice recording) goes to OpenAI to create a draft. Joining this list stores only your email. Full details in the privacy notice.
 4. **What if I lose my phone?**
@@ -310,3 +313,9 @@ Order: **words first, then visuals**, so the design is built around final copy. 
 - New consent label: welcome-and-early-access-2026-11-18. Server accepts this and welcome-and-early-access-2026-10-23. No Supabase schema/function or Resend delivery changes.
 - Consent audit limitation: existing join_blyth_waitlist_v2 SQL records the October label internally. Distinguishing stored wording versions requires a separately approved database-function change; this task only changes form/server eligibility, as instructed.
 - Verification and screenshots: reports/copy-remake/README.md. Landing commits remain local, not pushed/deployed.
+
+## Getting-started clarification — 27 November 2026
+- Owner decision from 21 November: updated trust-bar label and How it works step 1 to describe getting started, not completing all entries in a minute. Exact approved wording appears in sections 3 and 10 above.
+- Added “Do I have to enter everything at once?” directly after “Is it free?” (section 11, now 11 questions). No other answers changed.
+- Copy only: layouts, colours, fonts, animations, waitlist consent and backend logic unchanged. This follow-up is for feature-branch preview; owner will review and promote production.
+- Verification: `npx tsc --noEmit`, `npm run build` and `npm run test:waitlist` passed (18/18). Built homepage contains all exact approved strings in the requested FAQ order. Build reported stale Browserslist data; no dependency update made for this copy-only task.

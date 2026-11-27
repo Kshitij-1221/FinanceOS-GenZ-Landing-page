@@ -32,7 +32,7 @@ import { Overline } from '../Overline';
 import { Reveal } from '../Reveal';
 
 const STEPS = [
-  { n: 1, title: 'Set up your month',     body: 'Salary, bills, SIPs, budgets. About a minute.' },
+  { n: 1, title: 'Start in a minute',     body: "Add your salary and a savings target. Bring in bills, SIPs and budgets whenever you're ready, or just describe them to the AI." },
   { n: 2, title: 'Log as you go', body: 'Tap it, type it, or just say it. Check, then save.' },
   { n: 3, title: 'Watch your jar',        body: "Stay within budget, keep your streak, see what you'll save." },
 ] as const;
